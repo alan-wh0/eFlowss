@@ -11,4 +11,15 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+  proxy: {
+    '/api': {
+      target: 'https://eservices.app.n8n.cloud/webhook-test',
+      secure: false,
+      changeOrigin: true,
+      rewrite: (path) => path.replace(/^\/api/, ''), // quita /api del inicio
+    },
+  },
+},
+
 });
