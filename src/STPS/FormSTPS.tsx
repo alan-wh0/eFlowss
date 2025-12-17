@@ -96,7 +96,7 @@ const FormSTPS = () => {
             </div>
           </div>
           <h2 className="text-3xl font-bold text-primary mb-3">
-            ¡Solicitud Enviada!
+            ¡Solicitud Entregada!
           </h2>
           <p className="text-muted-foreground text-lg leading-relaxed mb-6">
             Gracias por su interés. Nuestro equipo revisará su solicitud y se
