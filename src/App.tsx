@@ -555,7 +555,7 @@ export default function FormSTPS() {
               <CardDescription>Complete la información requerida en {TOTAL_STEPS} sección(es)</CardDescription>
             </div>
             <div className="flex-shrink-0">
-              <img src="" alt="ESERVICES Logo" className="h-16 w-auto object-contain" />
+              <img src="./public/logo.jpg" alt="ESERVICES Logo" className="h-16 w-auto object-contain" />
             </div>
           </div>
         </CardHeader>
