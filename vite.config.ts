@@ -14,8 +14,8 @@ export default defineConfig({
   server: {
   proxy: {
     '/api': {
-      target: 'https://eservices.app.n8n.cloud/webhook-test',
-      secure: false,
+      target: 'https://eservices.app.n8n.cloud/webhook-test', // URL del servidor al que deseas hacer proxy
+      secure: false, 
       changeOrigin: true,
       rewrite: (path) => path.replace(/^\/api/, ''), // quita /api del inicio
     },
