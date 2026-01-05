@@ -756,26 +756,62 @@ export default function FormSTPS() {
     if (step > 1) setStep(step - 1)
   }
 
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => resolve(reader.result as string)
+      reader.onerror = (error) => reject(error)
+    })
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
 
-    const submitData = new FormData()
-    Object.entries(formData).forEach(([key, value]) => {
-      if (key === "LOGO" && value instanceof File) {
-        submitData.append(key, value, value.name)
-      } else if (value !== null) {
-        submitData.append(key, String(value))
+    try {
+      const submitData: Record<string, any> = {}
+      const images: Array<{ key: string; image: string; mimeType: string }> = []
+      
+      for (const [key, value] of Object.entries(formData)) {
+        if (key === "LOGO" && value instanceof File) {
+          // Convertir la imagen a base64
+          const base64Full = await fileToBase64(value)
+          // Extraer el base64 sin el prefijo "data:image/...;base64,"
+          const base64Match = base64Full.match(/^data:(.+);base64,(.+)$/)
+          if (base64Match) {
+            const mimeType = base64Match[1]
+            const base64Only = base64Match[2]
+            images.push({
+              key: "[LOGO]",
+              image: base64Only,
+              mimeType: mimeType
+            })
+          }
+        } else if (value !== null) {
+          submitData[key] = String(value)
+        }
       }
-    })
 
-    await fetch("api/imagenes", {
-      method: "POST",
-      body: submitData,
-    }).catch(() => {})
+      submitData.images = images
 
-    setIsLoading(false)
-    setIsSubmitted(true)
+      await fetch("api/imagenes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(submitData),
+      }).catch(() => {});
+
+      console.log(submitData)
+
+      setIsLoading(false)
+      setIsSubmitted(true)
+    } catch (error) {
+      console.error("Error al procesar el formulario:", error)
+      setError("Error al procesar la imagen")
+      setIsLoading(false)
+    }
   }
 
   const currentFields = FORM_SECTIONS[step] || []
@@ -791,7 +827,7 @@ export default function FormSTPS() {
               </div>
               <h2 className="text-2xl font-bold text-foreground">Formulario Completado</h2>
               <p className="text-muted-foreground">
-                Gracias por completar el formulario.
+                Revisa las carpetas con la informacion reemplazada.
               </p>
               <div className="flex gap-4 justify-center">
                 <Button variant="outline" onClick={() => setIsSubmitted(false)}>
@@ -874,7 +910,7 @@ export default function FormSTPS() {
                   </div>
                   <h3 className="text-2xl font-bold text-foreground">¡Formulario Completado!</h3>
                   <p className="text-muted-foreground">
-                    Has completado todas las secciones del formulario. Haz clic en el botón "Enviar" para enviar tu información.
+                    Espere un momento en lo que se llenan los datos.
                   </p>
                 </div>
               </div>
