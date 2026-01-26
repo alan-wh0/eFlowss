@@ -911,7 +911,10 @@ export default function FormSTPS() {
 }
       submitData.images = images
 
-      await fetch("api/imagenes", {
+      // En producción usa la URL directa de N8N, en desarrollo usa el proxy
+      const apiUrl = import.meta.env.VITE_N8N_WEBHOOK_URL || "/api/imagenes"
+      
+      await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
