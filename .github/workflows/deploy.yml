@@ -37,7 +37,6 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          passphrase: ${{ secrets.EC2_SSH_PASSPHRASE }}
           source: "dist/*"
           target: ${{ secrets.EC2_PATH }}
           strip_components: 1
