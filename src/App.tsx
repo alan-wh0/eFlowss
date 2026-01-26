@@ -913,7 +913,8 @@ export default function FormSTPS() {
 
       // En producción usa la URL directa de N8N, en desarrollo usa el proxy
       const apiUrl = import.meta.env.VITE_N8N_WEBHOOK_URL || "/api/imagenes"
-      
+    
+      // Aqui se hace la peticion
       await fetch(apiUrl, {
         method: "POST",
         headers: {
