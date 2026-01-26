@@ -403,7 +403,7 @@ const getInitialFormData = (): FormData => {
   Object.values(FORM_SECTIONS).forEach(section => {
     section.forEach(field => {
       if (field.value !== undefined && field.name !== "LOGO" && field.name !== "IMAGEN" && field.name !== "IMAGEN2") {
-        (initialData[field.name] as string) = field.value
+        initialData[field.name as keyof FormData] = field.value as any
       }
     })
   })
@@ -640,7 +640,6 @@ const FormField: React.FC<{
   if (type === "file") {
     const isLogoField = name === "LOGO"
     const isImagenField = name === "IMAGEN"
-    const isImagen2Field = name === "IMAGEN2"
     
     const currentHandler = isLogoField ? onLogoChange : isImagenField ? onImagenChange : onImagen2Change
     const currentPreview = isLogoField ? logoPreview : isImagenField ? imagenPreview : imagen2Preview
@@ -732,7 +731,7 @@ export default function FormSTPS() {
   const [imagenPreview, setImagenPreview] = useState<string | null>(null)
   const [imagen2Preview, setImagen2Preview] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [_error, setError] = useState<string | null>(null)
   const [formData, setFormData] = useState<FormData>(getInitialFormData())
 
   const resetForm = () => {
@@ -800,7 +799,7 @@ export default function FormSTPS() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleInputChangeDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChangeDate = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     if (name === "FECHA DE INICIO DE OPERACIONES") {
       const [aaaa, mm, dd] = value.split("-")
@@ -1007,7 +1006,7 @@ export default function FormSTPS() {
                   <FormField
                     key={field.id}
                     field={field}
-                    value={formData[field.name]}
+                    value={formData[field.name as keyof FormData]}
                     onChange={field.type === "date" ? handleInputChangeDate : handleInputChange}
                     onSelectChange={handleSelectChange}
                     onLogoChange={handleLogoChange}
