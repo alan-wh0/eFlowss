@@ -968,7 +968,7 @@ export default function FormSTPS() {
         <CardHeader>
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
-              <CardTitle className="text-2xl">Formulario STPS - Cliente</CardTitle>
+              <CardTitle className="text-2xl">Formulario STPS - Clientes {new Date().getFullYear()}</CardTitle>
               <CardDescription>Complete la información requerida en {TOTAL_STEPS} sección(es)</CardDescription>
             </div>
             <div className="flex-shrink-0">
