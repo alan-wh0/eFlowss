@@ -10,6 +10,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { CheckCircle2, Check, Loader2 } from "lucide-react"
 
+import logo from "../public/logo.jpg"
+
 
 interface FormData {
   // Sección 1 - Información General de la Empresa
@@ -966,7 +968,7 @@ export default function FormSTPS() {
               <CardDescription>Complete la información requerida en {TOTAL_STEPS} sección(es)</CardDescription>
             </div>
             <div className="flex-shrink-0">
-              <img src="./public/logo.jpg" alt="ESERVICES Logo" className="h-16 w-auto object-contain" />
+              <img src={logo} alt="ESERVICES Logo" className="h-16 w-auto object-contain" />
             </div>
           </div>
         </CardHeader>
