@@ -566,6 +566,7 @@ const FORM_SECTIONS: Record<number, FieldConfig[]> = {
     { id: "manguera15D", name: "MANGUERA 15D", label: "Manguera  Diesel 15", placeholder: "Ingrese información manguera diesel 15" },
   ],
   11: [
+    { id: "totalM2", name: "TOTAL M2", label: "Total de m2", type: "number", placeholder: "Ingrese el total en m2", step: "0.01" },
     { id: "oficinas", name: "INSERTAR NOMBRE DEL AREA 1", label: "Nombre de Area 1", placeholder: "Ingrese información de oficina(s)" },
     { id: "oficinasM2", name: "OFICINAS M2", label: "Superficie del área 1 en m2", type: "number", placeholder: "Ingrese los m2 de oficinas", step: "1", min: "0" },
     { id: "oficinasPorc", name: "OFICINAS %", label: "Superficie del área 1 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje de oficinas", step: "1", min: "0" },
@@ -610,7 +611,6 @@ const FORM_SECTIONS: Record<number, FieldConfig[]> = {
     { id: "area14", name: "INSERTAR NOMBRE DEL AREA 14", label: "Nombre de Area 14", placeholder: "Ingrese información de área 14" },
     { id: "area14M2", name: "AREA 14 M2", label: "Superficie del área 14 en m2", type: "number", placeholder: "Ingrese los m2 del área 14", step: "1", min: "0" },
     { id: "area14Porc", name: "AREA 14 %", label: "Superficie del área 14 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 14", step: "1", min: "0" },
-    { id: "totalM2", name: "TOTAL M2", label: "Total de m2", type: "number", placeholder: "Ingrese el total en m2", step: "0.01" },
   ],
 }
 
