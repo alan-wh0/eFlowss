@@ -460,7 +460,7 @@ const FORM_SECTIONS: Record<number, FieldConfig[]> = {
     { id: "colindanciaSur", name: "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL SUR", label: "Colindancias del Centro de Trabajo hacia el Sur", type: "textarea", placeholder: "Describa las colindancias hacia el sur", rows: 2 },
     { id: "colindanciaEste", name: "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL ESTE", label: "Colindancias del Centro de Trabajo hacia el Este", type: "textarea", placeholder: "Describa las colindancias hacia el este", rows: 2 },
     { id: "colindanciaOeste", name: "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL OESTE", label: "Colindancias del Centro de Trabajo hacia el Oeste", type: "textarea", placeholder: "Describa las colindancias hacia el oeste", rows: 2 },
-    { id: "metrosNivelMar", name: "INSERTAR LOS METROS SOBRE EL NIVEL DEL MAR DEL CENTRO DE TRABAJO", label: "Los Metros sobre el Nivel del Mar del Centro de Trabajo", type: "number", placeholder: "Ingrese los metros sobre el nivel del mar", step: "1" },
+    { id: "metrosNivelMar", name: "INSERTAR LOS METROS SOBRE EL NIVEL DEL MAR DEL CENTRO DE TRABAJO", label: "Metros sobre el Nivel del Mar del Centro de Trabajo", type: "number", placeholder: "Ingrese los metros sobre el nivel del mar", step: "1" },
     { id: "unidadesHabitacionales", name: "UNIDADES HABITACIONALES", label: "Unidades Habitacionales", type: "select", options: [{ value: "SI", label: "SI" }, { value: "NO", label: "NO" }] },
     { id: "establecimientosAtencionMedica", name: "ESTABLECIMIENTOS DE ATENCION MEDICA", label: "Establecimientos de Atencion Medica", type: "select", options: [{ value: "SI", label: "SI" }, { value: "NO", label: "NO" }] },
     { id: "centrosEducacionales", name: "CENTROS EDUCACIONALES", label: "Centros Educacionales", type: "select", options: [{ value: "SI", label: "SI" }, { value: "NO", label: "NO" }] },
@@ -501,7 +501,7 @@ const FORM_SECTIONS: Record<number, FieldConfig[]> = {
     { id: "xtipocom1", name: "XTIPOCOM1", label: "Tipo de combustible si es Bipartido 1", placeholder: "Ingrese el tipo de combustible si es el tanque es bipartido 1" },
     { id: "xtipoCom1", name: "XTIPOCOMLITROS1", label: "Cantidad de Combustible almacenado del tanque Bipartido 1", type: "number", placeholder: "Ingrese la cantidad de litros del tipo de combustible bipartido 1", step: "1", min: "0" },
     { id: "xtipocom2", name: "XTIPOCOM2", label: "Tipo de combustible si es Bipartido 2", placeholder: "Ingrese el tipo de combustible si es el tanque es bipartido 2" },
-    { id: "xtipoCom2", name: "XTIPOCOMLITROS2", label: "Cantidad de Combustible almacenado del tanque Bipartido 2", type: "number", placeholder: "Ingrese la cantidad de litros del tipo de combustible bipartido 2", step: "1", min: "0" },
+    { id: "xtipoCom2", name: "XTIPOCOMLITROS2", label: "Cantidad de Combustible almacenado del tanque Bipartido 1.1", type: "number", placeholder: "Ingrese la cantidad de litros del tipo de combustible bipartido 2", step: "1", min: "0" },
   ],
   9: [
     { id: "manguera1R", name: "MANGUERA 1R", label: "Manguera  Regular 1", placeholder: "Ingrese información manguera regular 1" },
@@ -978,7 +978,7 @@ export default function FormSTPS() {
   if (isSubmitted) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white p-4">
-        <Card className="w-full max-w-2xl">
+        <Card className="w-full max-w-3xl">
           <CardContent className="pt-6">
             <div className="text-center space-y-4">
               <div className="flex justify-center">
@@ -1003,7 +1003,7 @@ export default function FormSTPS() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white p-4">
-      <Card className="w-full max-w-2xl">
+      <Card className="w-full max-w-3xl">
         <CardHeader>
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
