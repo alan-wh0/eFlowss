@@ -633,8 +633,8 @@ const FormField: React.FC<{
 
   if (type === "heading") {
     return (
-      <div className="pt-4 pb-2">
-        <h3 className="text-lg font-semibold text-foreground">{label}</h3>
+      <div className="pt-4 pb-2 md:col-span-2">
+        <h3 className="text-base font-semibold text-foreground border-b pb-2">{label}</h3>
       </div>
     )
   }
@@ -642,36 +642,58 @@ const FormField: React.FC<{
   if (type === "file") {
     const isLogoField = name === "LOGO"
     const isImagenField = name === "IMAGEN"
+    const isImagen2Field = name === "IMAGEN2"
     
-    const currentHandler = isLogoField ? onLogoChange : isImagenField ? onImagenChange : onImagen2Change
-    const currentPreview = isLogoField ? logoPreview : isImagenField ? imagenPreview : imagen2Preview
+    const currentHandler = isLogoField ? onLogoChange : isImagenField ? onImagenChange : isImagen2Field ? onImagen2Change : undefined
+    const currentPreview = isLogoField ? logoPreview : isImagenField ? imagenPreview : isImagen2Field ? imagen2Preview : null
     
     return (
       <div className="space-y-2">
-        <Label htmlFor={id}>{label}</Label>
-        <div className="flex items-center gap-4">
-          <Input
-            id={id}
-            name={name}
-            type="file"
-            accept={accept}
-            onChange={currentHandler}
-            className="flex-1"
-          />
-          {currentPreview && (
-            <div className="w-16 h-16 border rounded-md overflow-hidden">
-              <img src={currentPreview} alt={`${label} preview`} className="w-full h-full object-contain" />
+        <Label htmlFor={id} className="text-sm font-medium">{label}</Label>
+        <label 
+          htmlFor={id}
+          className={`group flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer transition-all ${
+            currentPreview 
+              ? "border-primary/50 bg-primary/5" 
+              : "border-gray-300 hover:border-primary/50 hover:bg-gray-50"
+          }`}
+        >
+          {currentPreview ? (
+            <div className="flex items-center gap-3">
+              <div className="w-16 h-16 rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+                <img src={currentPreview} alt={`${label} preview`} className="w-full h-full object-contain" />
+              </div>
+              <div className="text-left">
+                <p className="text-sm font-medium text-gray-700">Archivo cargado</p>
+                <p className="text-xs text-gray-500">Clic para cambiar</p>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center">
+              <svg className="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+              <p className="text-sm font-medium text-gray-700">Subir archivo</p>
+              <p className="text-xs text-gray-500 mt-1">PNG, JPG o JPEG</p>
             </div>
           )}
-        </div>
+        </label>
+        <Input
+          id={id}
+          name={name}
+          type="file"
+          accept={accept}
+          onChange={currentHandler}
+          className="sr-only"
+        />
       </div>
     )
   }
 
   if (type === "textarea") {
     return (
-      <div className="space-y-2">
-        <Label htmlFor={id}>{label}</Label>
+      <div className="space-y-2 md:col-span-2">
+        <Label htmlFor={id} className="text-sm font-medium">{label}</Label>
         <Textarea
           id={id}
           name={name}
@@ -679,6 +701,7 @@ const FormField: React.FC<{
           onChange={onChange}
           placeholder={placeholder}
           rows={rows}
+          className="resize-none"
         />
       </div>
     )
@@ -687,12 +710,12 @@ const FormField: React.FC<{
   if (type === "select") {
     return (
       <div className="space-y-2">
-        <Label htmlFor={id}>{label}</Label>
+        <Label htmlFor={id} className="text-sm font-medium">{label}</Label>
         <Select
           value={value as string}
           onValueChange={(val) => onSelectChange(name, val)}
         >
-          <SelectTrigger id={id}>
+          <SelectTrigger id={id} className="h-10">
             <SelectValue placeholder={`Seleccione ${label}`} />
           </SelectTrigger>
           <SelectContent>
@@ -707,9 +730,23 @@ const FormField: React.FC<{
     )
   }
 
+  // Determinar si es un campo compacto que debe ocupar 1 columna
+  const isCompactField = type === "number" || 
+    name.includes("%") || 
+    name.includes("M2") ||
+    name.includes("LITROS") ||
+    name === "CODIGO POSTAL" ||
+    name === "NUM#" ||
+    name.startsWith("DISP") ||
+    name.includes("MANGUERA") ||
+    name.includes("TANQUE") ||
+    name.includes("TURNOS") ||
+    name.includes("OPERATIVOS") ||
+    name.includes("ADMINISTRATIVOS")
+
   return (
-    <div className="space-y-2">
-      <Label htmlFor={id}>{label}</Label>
+    <div className={`space-y-2 ${isCompactField ? "" : "md:col-span-2"}`}>
+      <Label htmlFor={id} className="text-sm font-medium">{label}</Label>
       <Input
         id={id}
         name={name}
@@ -721,6 +758,7 @@ const FormField: React.FC<{
         min={min}
         max={max}
         step={step}
+        className="h-10"
       />
     </div>
   )
@@ -978,36 +1016,23 @@ export default function FormSTPS() {
         </CardHeader>
         <CardContent>
           <div className="mb-8">
-            <div className="flex items-center justify-between relative px-4">
-              {Array.from({ length: TOTAL_STEPS }, (_, i) => i + 1).map((s, index) => (
-                <div key={s} className="flex flex-col items-center relative">
-                  {index < TOTAL_STEPS - 1 && (
-                    <div
-                      className={`absolute top-5 h-0.5 transition-all duration-300 ${
-                        s < step ? "bg-primary" : "bg-muted"
-                      }`}
-                      style={{ left: "20px", width: "calc(100% + 60px)" }}
-                    />
-                  )}
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 relative z-10 ${
-                      s < step
-                        ? "bg-primary text-primary-foreground"
-                        : s === step
-                          ? "bg-primary text-primary-foreground ring-4 ring-primary/20"
-                          : "bg-muted text-muted-foreground"
-                    }`}
-                  >
-                    {s === TOTAL_STEPS ? <Check className="w-5 h-5" /> : <span className="font-semibold">{s}</span>}
-                  </div>
-                </div>
-              ))}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-sm">
+                <span className="font-medium text-foreground">Paso {step} de {TOTAL_STEPS}</span>
+                <span className="text-muted-foreground">{Math.round((step / TOTAL_STEPS) * 100)}% completado</span>
+              </div>
+              <div className="h-2 bg-muted rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-primary transition-all duration-500 ease-out"
+                  style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
+                />
+              </div>
             </div>
           </div>
 
           <form onSubmit={handleSubmit}>
             {step < TOTAL_STEPS ? (
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {currentFields.map((field) => (
                   <FormField
                     key={field.id}
