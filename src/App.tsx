@@ -633,7 +633,7 @@ const FormField: React.FC<{
 
   if (type === "heading") {
     return (
-      <div className="pt-4 pb-2 md:col-span-2">
+      <div className="pt-4 pb-2 sm:col-span-2">
         <h3 className="text-base font-semibold text-foreground border-b pb-2">{label}</h3>
       </div>
     )
@@ -692,7 +692,7 @@ const FormField: React.FC<{
 
   if (type === "textarea") {
     return (
-      <div className="space-y-2 md:col-span-2">
+      <div className="space-y-2 sm:col-span-2">
         <Label htmlFor={id} className="text-sm font-medium">{label}</Label>
         <Textarea
           id={id}
@@ -746,7 +746,7 @@ const FormField: React.FC<{
     name.includes("ADMINISTRATIVOS")
 
   return (
-    <div className={`space-y-2 ${isCompactField ? "" : "md:col-span-2"}`}>
+    <div className={`space-y-2 ${isCompactField ? "" : "sm:col-span-2"}`}>
       <Label htmlFor={id} className="text-sm font-medium">{label}</Label>
       <Input
         id={id}
@@ -1050,7 +1050,7 @@ export default function FormSTPS() {
 
           <form onSubmit={handleSubmit}>
             {step < TOTAL_STEPS ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 {currentFields.map((field) => (
                   <FormField
                     key={field.id}
