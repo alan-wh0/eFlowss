@@ -710,7 +710,7 @@ const FormField: React.FC<{
   if (type === "select") {
     // Los select ocupan 1 columna por defecto
     return (
-      <div className="space-y-2">
+      <div className="space-y-2 col-span-1">
         <Label htmlFor={id} className="text-sm font-medium">{label}</Label>
         <Select
           value={value as string}
@@ -1024,14 +1024,14 @@ export default function FormSTPS() {
                   <p className="text-xs text-muted-foreground mt-0.5">Completa todos los campos requeridos</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg">
+                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 shadow-lg">
                     <span className="text-lg font-bold text-white">{Math.round((step / TOTAL_STEPS) * 100)}%</span>
                   </div>
                 </div>
               </div>
               <div className="relative h-3 bg-gradient-to-r from-gray-100 to-gray-200 rounded-full overflow-hidden shadow-inner">
                 <div 
-                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full transition-all duration-700 ease-out shadow-md"
+                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-green-400 via-green-500 to-emerald-500 rounded-full transition-all duration-700 ease-out shadow-md"
                   style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 animate-pulse" />
