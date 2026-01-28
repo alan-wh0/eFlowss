@@ -708,6 +708,7 @@ const FormField: React.FC<{
   }
 
   if (type === "select") {
+    // Los select ocupan 1 columna por defecto
     return (
       <div className="space-y-2">
         <Label htmlFor={id} className="text-sm font-medium">{label}</Label>
@@ -1016,16 +1017,33 @@ export default function FormSTPS() {
         </CardHeader>
         <CardContent>
           <div className="mb-8">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span className="font-medium text-foreground">Paso {step} de {TOTAL_STEPS}</span>
-                <span className="text-muted-foreground">{Math.round((step / TOTAL_STEPS) * 100)}% completado</span>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="text-sm font-semibold text-foreground">Paso {step} de {TOTAL_STEPS}</span>
+                  <p className="text-xs text-muted-foreground mt-0.5">Completa todos los campos requeridos</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg">
+                    <span className="text-lg font-bold text-white">{Math.round((step / TOTAL_STEPS) * 100)}%</span>
+                  </div>
+                </div>
               </div>
-              <div className="h-2 bg-muted rounded-full overflow-hidden">
+              <div className="relative h-3 bg-gradient-to-r from-gray-100 to-gray-200 rounded-full overflow-hidden shadow-inner">
                 <div 
-                  className="h-full bg-primary transition-all duration-500 ease-out"
+                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full transition-all duration-700 ease-out shadow-md"
                   style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
-                />
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 animate-pulse" />
+                </div>
+                <div 
+                  className="absolute inset-y-0 left-0 flex items-center justify-end pr-2"
+                  style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
+                >
+                  {step > 1 && (
+                    <div className="w-2 h-2 bg-white rounded-full shadow-lg" />
+                  )}
+                </div>
               </div>
             </div>
           </div>
