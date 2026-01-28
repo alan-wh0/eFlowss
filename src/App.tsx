@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { CheckCircle2, Check, Loader2, Upload, ChevronLeft, ChevronRight } from "lucide-react"
+import { CheckCircle2, Check, Loader2 } from "lucide-react"
 
 import logo from "../public/logo.jpg"
 
@@ -633,12 +633,11 @@ const FormField: React.FC<{
 
   if (type === "heading") {
     return (
-      <div className="col-span-full pt-6 pb-2">
-        <div className="flex items-center gap-3">
-          <div className="h-px flex-1 bg-gradient-to-r from-border/80 to-transparent" />
-          <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">{label}</h3>
-          <div className="h-px flex-1 bg-gradient-to-l from-border/80 to-transparent" />
-        </div>
+      <div className="col-span-2 pt-6 pb-3 border-b border-muted">
+        <h3 className="text-base font-bold text-foreground flex items-center gap-2">
+          <span className="w-1 h-5 bg-primary rounded-full"></span>
+          {label}
+        </h3>
       </div>
     )
   }
@@ -646,57 +645,34 @@ const FormField: React.FC<{
   if (type === "file") {
     const isLogoField = name === "LOGO"
     const isImagenField = name === "IMAGEN"
-    const isImagen2Field = name === "IMAGEN2"
     
-    const currentHandler = isLogoField ? onLogoChange : isImagenField ? onImagenChange : isImagen2Field ? onImagen2Change : undefined
-    const currentPreview = isLogoField ? logoPreview : isImagenField ? imagenPreview : isImagen2Field ? imagen2Preview : undefined
+    const currentHandler = isLogoField ? onLogoChange : isImagenField ? onImagenChange : onImagen2Change
+    const currentPreview = isLogoField ? logoPreview : isImagenField ? imagenPreview : imagen2Preview
     
     return (
-      <div className="space-y-2 col-span-full sm:col-span-1">
-        <Label htmlFor={id} className="text-sm font-medium text-foreground">{label}</Label>
-        <div className="relative">
-          <label 
-            htmlFor={id}
-            className={`
-              group flex flex-col items-center justify-center w-full h-28 
-              border-2 border-dashed rounded-xl cursor-pointer
-              transition-all duration-200 ease-out
-              ${currentPreview 
-                ? "border-primary/40 bg-primary/5" 
-                : "border-border/60 hover:border-primary/50 hover:bg-muted/40"
-              }
-            `}
-          >
-            {currentPreview ? (
-              <div className="flex items-center gap-3">
-                <div className="size-14 rounded-lg overflow-hidden border border-border/50 shadow-sm bg-background">
-                  <img src={currentPreview} alt={`${label} preview`} className="size-full object-contain" />
-                </div>
-                <div className="text-left">
-                  <p className="text-sm font-medium text-foreground">Cargado</p>
-                  <p className="text-xs text-muted-foreground">Clic para cambiar</p>
-                </div>
+      <div className="space-y-3 col-span-2">
+        <Label htmlFor={id} className="text-sm font-semibold">{label}</Label>
+        <div className="flex items-start gap-4">
+          <div className="flex-1">
+            <div className="relative">
+              <Input
+                id={id}
+                name={name}
+                type="file"
+                accept={accept}
+                onChange={currentHandler}
+                className="cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90 file:cursor-pointer"
+              />
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">Formatos permitidos: PNG, JPG, JPEG</p>
+          </div>
+          {currentPreview && (
+            <div className="flex-shrink-0">
+              <div className="relative w-24 h-24 border-2 border-dashed border-muted-foreground/30 rounded-lg overflow-hidden bg-muted/30 hover:border-primary transition-colors">
+                <img src={currentPreview} alt={`${label} preview`} className="w-full h-full object-contain p-1" />
               </div>
-            ) : (
-              <div className="flex flex-col items-center gap-1.5 text-muted-foreground group-hover:text-foreground transition-colors">
-                <div className="p-2.5 rounded-full bg-muted/60 group-hover:bg-primary/10 transition-colors">
-                  <Upload className="size-4" />
-                </div>
-                <div className="text-center">
-                  <p className="text-xs font-medium">Subir archivo</p>
-                  <p className="text-[10px] text-muted-foreground/80">PNG, JPG</p>
-                </div>
-              </div>
-            )}
-          </label>
-          <Input
-            id={id}
-            name={name}
-            type="file"
-            accept={accept}
-            onChange={currentHandler}
-            className="sr-only"
-          />
+            </div>
+          )}
         </div>
       </div>
     )
@@ -704,8 +680,8 @@ const FormField: React.FC<{
 
   if (type === "textarea") {
     return (
-      <div className="space-y-2 col-span-full">
-        <Label htmlFor={id} className="text-sm font-medium text-foreground">{label}</Label>
+      <div className="space-y-2 col-span-2">
+        <Label htmlFor={id} className="text-sm font-semibold">{label}</Label>
         <Textarea
           id={id}
           name={name}
@@ -713,7 +689,7 @@ const FormField: React.FC<{
           onChange={onChange}
           placeholder={placeholder}
           rows={rows}
-          className="resize-none border-border/60 bg-background/50 focus:bg-background focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:border-primary/50 transition-all duration-200 placeholder:text-muted-foreground/60"
+          className="resize-none focus:ring-2 focus:ring-primary/20"
         />
       </div>
     )
@@ -721,18 +697,18 @@ const FormField: React.FC<{
 
   if (type === "select") {
     return (
-      <div className="space-y-2 col-span-1">
-        <Label htmlFor={id} className="text-sm font-medium text-foreground">{label}</Label>
+      <div className="space-y-2">
+        <Label htmlFor={id} className="text-sm font-semibold">{label}</Label>
         <Select
           value={value as string}
           onValueChange={(val) => onSelectChange(name, val)}
         >
-          <SelectTrigger id={id} className="h-10 border-border/60 bg-background/50 focus:bg-background focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all duration-200">
+          <SelectTrigger id={id} className="focus:ring-2 focus:ring-primary/20">
             <SelectValue placeholder={`Seleccione ${label}`} />
           </SelectTrigger>
-          <SelectContent className="shadow-xl border-border/40 bg-background/95 backdrop-blur-sm">
+          <SelectContent>
             {options?.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="cursor-pointer focus:bg-primary/10 focus:text-foreground">
+              <SelectItem key={option.value} value={option.value}>
                 {option.label}
               </SelectItem>
             ))}
@@ -742,19 +718,9 @@ const FormField: React.FC<{
     )
   }
 
-  // Determinar si es un campo compacto (números, códigos cortos, porcentajes)
-  const isCompactField = type === "number" || 
-    name.includes("%") || 
-    name.includes("M2") ||
-    name.includes("LITROS") ||
-    name === "CODIGO POSTAL" ||
-    name === "NUM#" ||
-    name.startsWith("DISP") ||
-    name.includes("MANGUERA")
-    
   return (
-    <div className={`space-y-2 ${isCompactField ? "col-span-1" : "col-span-full sm:col-span-2"}`}>
-      <Label htmlFor={id} className="text-sm font-medium text-foreground">{label}</Label>
+    <div className="space-y-2">
+      <Label htmlFor={id} className="text-sm font-semibold">{label}</Label>
       <Input
         id={id}
         name={name}
@@ -766,7 +732,7 @@ const FormField: React.FC<{
         min={min}
         max={max}
         step={step}
-        className="h-10 border-border/60 bg-background/50 focus:bg-background focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:border-primary/50 transition-all duration-200 placeholder:text-muted-foreground/60"
+        className="focus:ring-2 focus:ring-primary/20"
       />
     </div>
   )
@@ -984,37 +950,22 @@ export default function FormSTPS() {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-background to-slate-100/50 p-4 sm:p-6 lg:p-8">
-        <Card className="w-full max-w-lg shadow-2xl shadow-black/5 border-0 ring-1 ring-border/40 overflow-hidden">
-          <CardContent className="pt-12 pb-10 px-8 sm:px-12">
-            <div className="text-center space-y-6">
+      <div className="min-h-screen flex items-center justify-center bg-white p-4">
+        <Card className="w-full max-w-2xl">
+          <CardContent className="pt-6">
+            <div className="text-center space-y-4">
               <div className="flex justify-center">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-emerald-500/20 rounded-full blur-xl animate-pulse" />
-                  <div className="relative rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 p-5 shadow-lg shadow-emerald-500/30">
-                    <CheckCircle2 className="size-12 text-white" />
-                  </div>
-                </div>
+                <CheckCircle2 className="h-16 w-16 text-green-500" />
               </div>
-              <div className="space-y-3">
-                <h2 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
-                  Formulario Completado
-                </h2>
-                <p className="text-muted-foreground text-base max-w-sm mx-auto leading-relaxed">
-                  Revisa las carpetas con la informacion reemplazada.
-                </p>
-              </div>
-              <div className="flex flex-col gap-3 pt-4">
-                <Button onClick={resetForm} className="w-full bg-primary hover:bg-primary/90 shadow-md">
-                  Enviar Otro Formulario
-                </Button>
-                <Button 
-                  variant="ghost" 
-                  onClick={() => setIsSubmitted(false)} 
-                  className="w-full text-muted-foreground hover:text-foreground"
-                >
+              <h2 className="text-2xl font-bold text-foreground">Formulario Completado</h2>
+              <p className="text-muted-foreground">
+                Revisa las carpetas con la informacion reemplazada.
+              </p>
+              <div className="flex gap-4 justify-center">
+                <Button variant="outline" onClick={() => setIsSubmitted(false)}>
                   Editar Formulario
                 </Button>
+                <Button onClick={resetForm}>Enviar Otro Formulario</Button>
               </div>
             </div>
           </CardContent>
@@ -1024,27 +975,20 @@ export default function FormSTPS() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-background to-slate-100/50 p-4 sm:p-6 lg:p-8">
-      <Card className="w-full max-w-3xl shadow-2xl shadow-black/5 border-0 ring-1 ring-border/40 overflow-hidden">
-        <CardHeader className="pb-4 px-6 sm:px-8 pt-6 sm:pt-8 bg-gradient-to-b from-muted/30 to-transparent">
-          <div className="flex items-start justify-between gap-4 sm:gap-6">
-            <div className="flex-1 space-y-1">
-              <CardTitle className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-foreground">
-                Formulario STPS
-                <span className="block text-sm sm:text-base font-medium text-muted-foreground mt-0.5">
-                  Clientes {new Date().getFullYear()}
-                </span>
-              </CardTitle>
-              <CardDescription className="text-sm text-muted-foreground/80 hidden sm:block">
-                Complete la información requerida en {TOTAL_STEPS} secciones
-              </CardDescription>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-4">
+      <Card className="w-full max-w-5xl shadow-xl border-0">
+        <CardHeader className="border-b bg-gradient-to-r from-primary/5 to-primary/10">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex-1">
+              <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Formulario STPS - Clientes {new Date().getFullYear()}</CardTitle>
+              <CardDescription className="text-base mt-1">Complete la información requerida en {TOTAL_STEPS} sección(es)</CardDescription>
             </div>
-            <div className="shrink-0 p-2 bg-background rounded-xl shadow-sm ring-1 ring-border/30">
-              <img src={logo} alt="ESERVICES Logo" className="h-10 sm:h-12 w-auto object-contain" />
+            <div className="flex-shrink-0">
+              <img src={logo} alt="ESERVICES Logo" className="h-16 w-auto object-contain" />
             </div>
           </div>
         </CardHeader>
-        <CardContent className="px-6 sm:px-8 pb-8">
+        <CardContent className="pt-6">
           <div className="mb-8">
             <div className="flex items-center justify-between relative px-4">
               {Array.from({ length: TOTAL_STEPS }, (_, i) => i + 1).map((s, index) => (
@@ -1071,7 +1015,11 @@ export default function FormSTPS() {
                 </div>
               ))}
             </div>
+          </div>
 
+          <form onSubmit={handleSubmit}>
+            {step < TOTAL_STEPS ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
                 {currentFields.map((field) => (
                   <FormField
                     key={field.id}
@@ -1089,39 +1037,26 @@ export default function FormSTPS() {
                 ))}
               </div>
             ) : (
-              <div className="py-10">
-                <div className="text-center space-y-6">
+              <div>
+                <div className="text-center space-y-4">
                   <div className="flex justify-center">
-                    <div className="relative">
-                      <div className="absolute inset-0 bg-primary/20 rounded-full blur-lg animate-pulse" />
-                      <div className="relative flex items-center justify-center size-20 bg-gradient-to-br from-primary to-primary/80 rounded-full shadow-lg shadow-primary/25">
-                        <Check className="size-10 text-primary-foreground" />
-                      </div>
+                    <div className="flex items-center justify-center w-20 h-20 bg-green-100 rounded-full">
+                      <Check className="w-10 h-10 text-green-600" />
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <h3 className="text-2xl font-bold text-foreground tracking-tight">¡Listo para enviar!</h3>
-                    <p className="text-muted-foreground text-base max-w-sm mx-auto leading-relaxed">
-                      Revisa la informacion y presiona confirmar para procesar los datos.
-                    </p>
-                  </div>
+                  <h3 className="text-2xl font-bold text-foreground">¡Formulario Completado!</h3>
+                  <p className="text-muted-foreground">
+                    Espere un momento en lo que se llenan los datos.
+                  </p>
                 </div>
               </div>
             )}
 
-            <div className="flex items-center justify-between gap-3 mt-8 pt-6 border-t border-border/40">
-              <Button 
-                type="button" 
-                variant="ghost" 
-                onClick={handlePrevious} 
-                disabled={step === 1 || isLoading} 
-                className="gap-2 text-muted-foreground hover:text-foreground disabled:opacity-40"
-              >
-                <ChevronLeft className="size-4" />
-                <span className="hidden sm:inline">Anterior</span>
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6">
+              <Button type="button" variant="outline" onClick={handlePrevious} disabled={step === 1 || isLoading} className="w-full sm:w-auto">
+                Anterior
               </Button>
-              
-              <div className="flex items-center gap-1 overflow-x-auto py-1 px-2 max-w-[200px] sm:max-w-none">
+              <div className="flex items-center gap-2 flex-wrap justify-center">
                 {Array.from({ length: TOTAL_STEPS - 1 }, (_, i) => i + 1).map((s) => (
                   <button
                     key={s}
