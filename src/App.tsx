@@ -460,7 +460,7 @@ const FORM_SECTIONS: Record<number, FieldConfig[]> = {
     { id: "colindanciaSur", name: "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL SUR", label: "Colindancias del Centro de Trabajo hacia el Sur", type: "textarea", placeholder: "Describa las colindancias hacia el sur", rows: 2 },
     { id: "colindanciaEste", name: "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL ESTE", label: "Colindancias del Centro de Trabajo hacia el Este", type: "textarea", placeholder: "Describa las colindancias hacia el este", rows: 2 },
     { id: "colindanciaOeste", name: "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL OESTE", label: "Colindancias del Centro de Trabajo hacia el Oeste", type: "textarea", placeholder: "Describa las colindancias hacia el oeste", rows: 2 },
-    { id: "metrosNivelMar", name: "INSERTAR LOS METROS SOBRE EL NIVEL DEL MAR DEL CENTRO DE TRABAJO", label: "Los Metros sobre el Nivel del Mar del Centro de Trabajo", type: "number", placeholder: "Ingrese los metros sobre el nivel del mar", step: "1" },
+    { id: "metrosNivelMar", name: "INSERTAR LOS METROS SOBRE EL NIVEL DEL MAR DEL CENTRO DE TRABAJO", label: "Metros sobre el Nivel del Mar del Centro de Trabajo", type: "number", placeholder: "Ingrese los metros sobre el nivel del mar", step: "1" },
     { id: "unidadesHabitacionales", name: "UNIDADES HABITACIONALES", label: "Unidades Habitacionales", type: "select", options: [{ value: "SI", label: "SI" }, { value: "NO", label: "NO" }] },
     { id: "establecimientosAtencionMedica", name: "ESTABLECIMIENTOS DE ATENCION MEDICA", label: "Establecimientos de Atencion Medica", type: "select", options: [{ value: "SI", label: "SI" }, { value: "NO", label: "NO" }] },
     { id: "centrosEducacionales", name: "CENTROS EDUCACIONALES", label: "Centros Educacionales", type: "select", options: [{ value: "SI", label: "SI" }, { value: "NO", label: "NO" }] },
@@ -480,6 +480,9 @@ const FORM_SECTIONS: Record<number, FieldConfig[]> = {
     { id: "permisoCRE", name: "INSERTAR PERMISO CRE", label: "Permiso CRE", placeholder: "Ingrese el permiso CRE" },
   ],
   7: [
+    { id: "totalTanques", name: "TOTAL DE TANQUES", label: "Total de Tanques", type: "number", placeholder: "Ingrese el total de tanques", min: "0" },
+    { id: "totalDispensarios", name: "X CANTIDAD DE DISPENSARIOS", label: "Total de Dispensarios", type: "number", placeholder: "Ingrese el total de dispensarios", min: "0" },
+    { id: "totalLitrosCombustible", name: "TOTAL DE LITROS DE COMBUSTIBLE", label: "Total de Litros de Combustible", type: "number", placeholder: "Ingrese el total de litros de combustible", step: "1", min: "0" },
     { id: "tanqueRegular", name: "TANQUE REGULAR", label: "Tipo de combustible que almacena el tanque 1", placeholder: "Ingrese el tipo de combustible del tanque 1 ejemplo: regular" },
     { id: "regularLitros", name: "REGULAR LITROS", label: "Cantidad de Litros almacenados del tanque 1", type: "number", placeholder: "Ingrese la cantidad de litros del tanque 1", step: "1", min: "0" },
     { id: "tanquePremium", name: "TANQUE PREMIUM", label: "Tipo de combustible que almacena el tanque 2", placeholder: "Ingrese el tipo de combustible del tanque 2 ejemplo: premium" },
@@ -498,59 +501,9 @@ const FORM_SECTIONS: Record<number, FieldConfig[]> = {
     { id: "xtipocom1", name: "XTIPOCOM1", label: "Tipo de combustible si es Bipartido 1", placeholder: "Ingrese el tipo de combustible si es el tanque es bipartido 1" },
     { id: "xtipoCom1", name: "XTIPOCOMLITROS1", label: "Cantidad de Combustible almacenado del tanque Bipartido 1", type: "number", placeholder: "Ingrese la cantidad de litros del tipo de combustible bipartido 1", step: "1", min: "0" },
     { id: "xtipocom2", name: "XTIPOCOM2", label: "Tipo de combustible si es Bipartido 2", placeholder: "Ingrese el tipo de combustible si es el tanque es bipartido 2" },
-    { id: "xtipoCom2", name: "XTIPOCOMLITROS2", label: "Cantidad de Combustible almacenado del tanque Bipartido 2", type: "number", placeholder: "Ingrese la cantidad de litros del tipo de combustible bipartido 2", step: "1", min: "0" },
-    { id: "totalTanques", name: "TOTAL DE TANQUES", label: "Total de Tanques", type: "number", placeholder: "Ingrese el total de tanques", min: "0" },
-    { id: "totalDispensarios", name: "X CANTIDAD DE DISPENSARIOS", label: "Total de Dispensarios", type: "number", placeholder: "Ingrese el total de dispensarios", min: "0" },
-    { id: "totalLitrosCombustible", name: "TOTAL DE LITROS DE COMBUSTIBLE", label: "Total de Litros de Combustible", type: "number", placeholder: "Ingrese el total de litros de combustible", step: "1", min: "0" },
+    { id: "xtipoCom2", name: "XTIPOCOMLITROS2", label: "Cantidad de Combustible almacenado del tanque Bipartido 1.1", type: "number", placeholder: "Ingrese la cantidad de litros del tipo de combustible bipartido 2", step: "1", min: "0" },
   ],
   9: [
-    { id: "oficinas", name: "INSERTAR NOMBRE DEL AREA 1", label: "Nombre de Area 1", placeholder: "Ingrese información de oficina(s)" },
-    { id: "oficinasM2", name: "OFICINAS M2", label: "Superficie del área 1 en m2", type: "number", placeholder: "Ingrese los m2 de oficinas", step: "1" },
-    { id: "oficinasPorc", name: "OFICINAS %", label: "Superficie del área 1 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje de oficinas", step: "1", min: "0", max: "100" },
-    { id: "oficinas2", name: "INSERTAR NOMBRE DEL AREA 2", label: "Nombre de Area 2", placeholder: "Ingrese información de área 2" },
-    { id: "areaM2", name: "AREA M2", label: "Superficie del área 2 en m2", type: "number", placeholder: "Ingrese los m2 del área", step: "1" },
-    { id: "areaPorc", name: "AREA %", label: "Superficie del área 2 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área", step: "1", min: "0", max: "100" },
-    { id: "area3", name: "INSERTAR NOMBRE DEL AREA 3", label: "Nombre de Area 3", placeholder: "Ingrese información de área 3" },
-    { id: "area3M2", name: "AREA 3 M2", label: "Superficie del área 3 en m2", type: "number", placeholder: "Ingrese los m2 del área 3", step: "1" },
-    { id: "area3Porc", name: "AREA 3 %", label: "Superficie del área 3 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 3", step: "1", min: "0", max: "100" },
-    { id: "area4", name: "INSERTAR NOMBRE DEL AREA 4", label: "Nombre de Area 4", placeholder: "Ingrese información de área 4" },
-    { id: "area4M2", name: "AREA 4 M2", label: "Superficie del área 4 en m2", type: "number", placeholder: "Ingrese los m2 del área 4", step: "1" },
-    { id: "area4Porc", name: "AREA 4 %", label: "Superficie del área 4 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 4", step: "1", min: "0", max: "100" },
-    { id: "area5", name: "INSERTAR NOMBRE DEL AREA 5", label: "Nombre de Area 5", placeholder: "Ingrese información de área 5" },
-    { id: "area5M2", name: "AREA 5 M2", label: "Superficie del área 5 en m2", type: "number", placeholder: "Ingrese los m2 del área 5", step: "1" },
-    { id: "area5Porc", name: "AREA 5 %", label: "Superficie del área 5 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 5", step: "1", min: "0", max: "100" },
-    { id: "area6", name: "INSERTAR NOMBRE DEL AREA 6", label: "Nombre de Area 6", placeholder: "Ingrese información de área 6" },
-    { id: "area6M2", name: "AREA 6 M2", label: "Superficie del área 6 en m2", type: "number", placeholder: "Ingrese los m2 del área 6", step: "1" },
-    { id: "area6Porc", name: "AREA 6 %", label: "Superficie del área 6 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 6", step: "1", min: "0", max: "100" },
-    { id: "area7", name: "INSERTAR NOMBRE DEL AREA 7", label: "Nombre de Area 7", placeholder: "Ingrese información de área 7" },
-    { id: "area7M2", name: "AREA 7 M2", label: "Superficie del área 7 en m2", type: "number", placeholder: "Ingrese los m2 del área 7", step: "1" },
-    { id: "area7Porc", name: "AREA 7 %", label: "Superficie del área 7 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 7", step: "1", min: "0", max: "100" },
-    { id: "area8", name: "INSERTAR NOMBRE DEL AREA 8", label: "Nombre de Area 8", placeholder: "Ingrese información de área 8" },
-    { id: "area8M2", name: "AREA 8 M2", label: "Superficie del área 8 en m2", type: "number", placeholder: "Ingrese los m2 del área 8", step: "1" },
-    { id: "area8Porc", name: "AREA 8 %", label: "Superficie del área 8 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 8", step: "1", min: "0", max: "100" },
-  ],
-  10: [
-    { id: "area9", name: "INSERTAR NOMBRE DEL AREA 9", label: "Nombre de Area 9", placeholder: "Ingrese información de área 9" },
-    { id: "area9M2", name: "AREA 9 M2", label: "Superficie del área 9 en m2", type: "number", placeholder: "Ingrese los m2 del área 9", step: "1" },
-    { id: "area9Porc", name: "AREA 9 %", label: "Superficie del área 9 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 9", step: "1", min: "0", max: "100" },
-    { id: "area10", name: "INSERTAR NOMBRE DEL AREA 10", label: "Nombre de Area 10", placeholder: "Ingrese información de área 10" },
-    { id: "area10M2", name: "AREA 10 M2", label: "Superficie del área 10 en m2", type: "number", placeholder: "Ingrese los m2 del área 10", step: "1" },
-    { id: "area10Porc", name: "AREA 10 %", label: "Superficie del área 10 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 10", step: "1", min: "0", max: "100" },
-    { id: "area11", name: "INSERTAR NOMBRE DEL AREA 11", label: "Nombre de Area 11", placeholder: "Ingrese información de área 11" },
-    { id: "area11M2", name: "AREA 11 M2", label: "Superficie del área 11 en m2", type: "number", placeholder: "Ingrese los m2 del área 11", step: "1" },
-    { id: "area11Porc", name: "AREA 11 %", label: "Superficie del área 11 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 11", step: "1", min: "0", max: "100" },
-    { id: "area12", name: "INSERTAR NOMBRE DEL AREA 12", label: "Nombre de Area 12", placeholder: "Ingrese información de área 12" },
-    { id: "area12M2", name: "AREA 12 M2", label: "Superficie del área 12 en m2", type: "number", placeholder: "Ingrese los m2 del área 12", step: "1" },
-    { id: "area12Porc", name: "AREA 12 %", label: "Superficie del área 12 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 12", step: "1", min: "0", max: "100" },
-    { id: "area13", name: "INSERTAR NOMBRE DEL AREA 13", label: "Nombre de Area 13", placeholder: "Ingrese información de área 13" },
-    { id: "area13M2", name: "AREA 13 M2", label: "Superficie del área 13 en m2", type: "number", placeholder: "Ingrese los m2 del área 13", step: "1" },
-    { id: "area13Porc", name: "AREA 13 %", label: "Superficie del área 13 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 13", step: "1", min: "0", max: "100" },
-    { id: "area14", name: "INSERTAR NOMBRE DEL AREA 14", label: "Nombre de Area 14", placeholder: "Ingrese información de área 14" },
-    { id: "area14M2", name: "AREA 14 M2", label: "Superficie del área 14 en m2", type: "number", placeholder: "Ingrese los m2 del área 14", step: "1" },
-    { id: "area14Porc", name: "AREA 14 %", label: "Superficie del área 14 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 14", step: "1", min: "0", max: "100" },
-    { id: "totalM2", name: "TOTAL M2", label: "Total de m2", type: "number", placeholder: "Ingrese el total en m2", step: "0.01" },
-  ],
-  11: [
     { id: "manguera1R", name: "MANGUERA 1R", label: "Manguera  Regular 1", placeholder: "Ingrese información manguera regular 1" },
     { id: "manguera1P", name: "MANGUERA 1P", label: "Manguera  Premium 1", placeholder: "Ingrese información manguera premium 1" },
     { id: "manguera1D", name: "MANGUERA 1D", label: "Manguera  Diesel 1", placeholder: "Ingrese información manguera diesel 1" },
@@ -582,7 +535,7 @@ const FORM_SECTIONS: Record<number, FieldConfig[]> = {
     { id: "manguera8P", name: "MANGUERA 8P", label: "Manguera  Premium 8", placeholder: "Ingrese información manguera premium 8" },
     { id: "manguera8D", name: "MANGUERA 8D", label: "Manguera  Diesel 8", placeholder: "Ingrese información manguera diesel 8" },
   ],
-  12: [
+  10: [
     { id: "disp9", name: "DISP9", label: "Dispensario 9", type: "text", placeholder: "Ingresar solo el numero del dispensario (9)", maxLength: 1 },
     { id: "manguera9R", name: "MANGUERA 9R", label: "Manguera  Regular 9", placeholder: "Ingrese información manguera regular 9" },
     { id: "manguera9P", name: "MANGUERA 9P", label: "Manguera  Premium 9", placeholder: "Ingrese información manguera premium 9" },
@@ -612,6 +565,53 @@ const FORM_SECTIONS: Record<number, FieldConfig[]> = {
     { id: "manguera15P", name: "MANGUERA 15P", label: "Manguera  Premium 15", placeholder: "Ingrese información manguera premium 15" },
     { id: "manguera15D", name: "MANGUERA 15D", label: "Manguera  Diesel 15", placeholder: "Ingrese información manguera diesel 15" },
   ],
+  11: [
+    { id: "totalM2", name: "TOTAL M2", label: "Total de m2", type: "number", placeholder: "Ingrese el total en m2", step: "0.01" },
+    { id: "oficinas", name: "INSERTAR NOMBRE DEL AREA 1", label: "Nombre de Area 1", placeholder: "Ingrese información de oficina(s)" },
+    { id: "oficinasM2", name: "OFICINAS M2", label: "Superficie del área 1 en m2", type: "number", placeholder: "Ingrese los m2 de oficinas", step: "1", min: "0" },
+    { id: "oficinasPorc", name: "OFICINAS %", label: "Superficie del área 1 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje de oficinas", step: "1", min: "0" },
+    { id: "oficinas2", name: "INSERTAR NOMBRE DEL AREA 2", label: "Nombre de Area 2", placeholder: "Ingrese información de área 2" },
+    { id: "areaM2", name: "AREA M2", label: "Superficie del área 2 en m2", type: "number", placeholder: "Ingrese los m2 del área", step: "1", min: "0" },
+    { id: "areaPorc", name: "AREA %", label: "Superficie del área 2 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área", step: "1", min: "0" },
+    { id: "area3", name: "INSERTAR NOMBRE DEL AREA 3", label: "Nombre de Area 3", placeholder: "Ingrese información de área 3" },
+    { id: "area3M2", name: "AREA 3 M2", label: "Superficie del área 3 en m2", type: "number", placeholder: "Ingrese los m2 del área 3", step: "1", min: "0" },
+    { id: "area3Porc", name: "AREA 3 %", label: "Superficie del área 3 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 3", step: "1", min: "0" },
+    { id: "area4", name: "INSERTAR NOMBRE DEL AREA 4", label: "Nombre de Area 4", placeholder: "Ingrese información de área 4" },
+    { id: "area4M2", name: "AREA 4 M2", label: "Superficie del área 4 en m2", type: "number", placeholder: "Ingrese los m2 del área 4", step: "1", min: "0" },
+    { id: "area4Porc", name: "AREA 4 %", label: "Superficie del área 4 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 4", step: "1", min: "0" },
+    { id: "area5", name: "INSERTAR NOMBRE DEL AREA 5", label: "Nombre de Area 5", placeholder: "Ingrese información de área 5" },
+    { id: "area5M2", name: "AREA 5 M2", label: "Superficie del área 5 en m2", type: "number", placeholder: "Ingrese los m2 del área 5", step: "1", min: "0" },
+    { id: "area5Porc", name: "AREA 5 %", label: "Superficie del área 5 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 5", step: "1", min: "0" },
+    { id: "area6", name: "INSERTAR NOMBRE DEL AREA 6", label: "Nombre de Area 6", placeholder: "Ingrese información de área 6" },
+    { id: "area6M2", name: "AREA 6 M2", label: "Superficie del área 6 en m2", type: "number", placeholder: "Ingrese los m2 del área 6", step: "1", min: "0" },
+    { id: "area6Porc", name: "AREA 6 %", label: "Superficie del área 6 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 6", step: "1", min: "0" },
+    { id: "area7", name: "INSERTAR NOMBRE DEL AREA 7", label: "Nombre de Area 7", placeholder: "Ingrese información de área 7" },
+    { id: "area7M2", name: "AREA 7 M2", label: "Superficie del área 7 en m2", type: "number", placeholder: "Ingrese los m2 del área 7", step: "1", min: "0" },
+    { id: "area7Porc", name: "AREA 7 %", label: "Superficie del área 7 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 7", step: "1", min: "0" },
+    { id: "area8", name: "INSERTAR NOMBRE DEL AREA 8", label: "Nombre de Area 8", placeholder: "Ingrese información de área 8" },
+    { id: "area8M2", name: "AREA 8 M2", label: "Superficie del área 8 en m2", type: "number", placeholder: "Ingrese los m2 del área 8", step: "1", min: "0" },
+    { id: "area8Porc", name: "AREA 8 %", label: "Superficie del área 8 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 8", step: "1", min: "0" },
+  ],
+  12: [
+    { id: "area9", name: "INSERTAR NOMBRE DEL AREA 9", label: "Nombre de Area 9", placeholder: "Ingrese información de área 9" },
+    { id: "area9M2", name: "AREA 9 M2", label: "Superficie del área 9 en m2", type: "number", placeholder: "Ingrese los m2 del área 9", step: "1", min: "0" },
+    { id: "area9Porc", name: "AREA 9 %", label: "Superficie del área 9 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 9", step: "1", min: "0" },
+    { id: "area10", name: "INSERTAR NOMBRE DEL AREA 10", label: "Nombre de Area 10", placeholder: "Ingrese información de área 10" },
+    { id: "area10M2", name: "AREA 10 M2", label: "Superficie del área 10 en m2", type: "number", placeholder: "Ingrese los m2 del área 10", step: "1", min: "0" },
+    { id: "area10Porc", name: "AREA 10 %", label: "Superficie del área 10 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 10", step: "1", min: "0" },
+    { id: "area11", name: "INSERTAR NOMBRE DEL AREA 11", label: "Nombre de Area 11", placeholder: "Ingrese información de área 11" },
+    { id: "area11M2", name: "AREA 11 M2", label: "Superficie del área 11 en m2", type: "number", placeholder: "Ingrese los m2 del área 11", step: "1", min: "0" },
+    { id: "area11Porc", name: "AREA 11 %", label: "Superficie del área 11 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 11", step: "1", min: "0" },
+    { id: "area12", name: "INSERTAR NOMBRE DEL AREA 12", label: "Nombre de Area 12", placeholder: "Ingrese información de área 12" },
+    { id: "area12M2", name: "AREA 12 M2", label: "Superficie del área 12 en m2", type: "number", placeholder: "Ingrese los m2 del área 12", step: "1", min: "0" },
+    { id: "area12Porc", name: "AREA 12 %", label: "Superficie del área 12 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 12", step: "1", min: "0" },
+    { id: "area13", name: "INSERTAR NOMBRE DEL AREA 13", label: "Nombre de Area 13", placeholder: "Ingrese información de área 13" },
+    { id: "area13M2", name: "AREA 13 M2", label: "Superficie del área 13 en m2", type: "number", placeholder: "Ingrese los m2 del área 13", step: "1", min: "0" },
+    { id: "area13Porc", name: "AREA 13 %", label: "Superficie del área 13 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 13", step: "1", min: "0" },
+    { id: "area14", name: "INSERTAR NOMBRE DEL AREA 14", label: "Nombre de Area 14", placeholder: "Ingrese información de área 14" },
+    { id: "area14M2", name: "AREA 14 M2", label: "Superficie del área 14 en m2", type: "number", placeholder: "Ingrese los m2 del área 14", step: "1", min: "0" },
+    { id: "area14Porc", name: "AREA 14 %", label: "Superficie del área 14 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 14", step: "1", min: "0" },
+  ],
 }
 
 const TOTAL_STEPS = 13
@@ -633,8 +633,8 @@ const FormField: React.FC<{
 
   if (type === "heading") {
     return (
-      <div className="pt-4 pb-2">
-        <h3 className="text-lg font-semibold text-foreground">{label}</h3>
+      <div className="pt-4 pb-2 sm:col-span-2">
+        <h3 className="text-base font-semibold text-foreground border-b pb-2">{label}</h3>
       </div>
     )
   }
@@ -642,36 +642,58 @@ const FormField: React.FC<{
   if (type === "file") {
     const isLogoField = name === "LOGO"
     const isImagenField = name === "IMAGEN"
+    const isImagen2Field = name === "IMAGEN2"
     
-    const currentHandler = isLogoField ? onLogoChange : isImagenField ? onImagenChange : onImagen2Change
-    const currentPreview = isLogoField ? logoPreview : isImagenField ? imagenPreview : imagen2Preview
+    const currentHandler = isLogoField ? onLogoChange : isImagenField ? onImagenChange : isImagen2Field ? onImagen2Change : undefined
+    const currentPreview = isLogoField ? logoPreview : isImagenField ? imagenPreview : isImagen2Field ? imagen2Preview : null
     
     return (
       <div className="space-y-2">
-        <Label htmlFor={id}>{label}</Label>
-        <div className="flex items-center gap-4">
-          <Input
-            id={id}
-            name={name}
-            type="file"
-            accept={accept}
-            onChange={currentHandler}
-            className="flex-1"
-          />
-          {currentPreview && (
-            <div className="w-16 h-16 border rounded-md overflow-hidden">
-              <img src={currentPreview} alt={`${label} preview`} className="w-full h-full object-contain" />
+        <Label htmlFor={id} className="text-sm font-medium">{label}</Label>
+        <label 
+          htmlFor={id}
+          className={`group flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer transition-all ${
+            currentPreview 
+              ? "border-primary/50 bg-primary/5" 
+              : "border-gray-300 hover:border-primary/50 hover:bg-gray-50"
+          }`}
+        >
+          {currentPreview ? (
+            <div className="flex items-center gap-3">
+              <div className="w-16 h-16 rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+                <img src={currentPreview} alt={`${label} preview`} className="w-full h-full object-contain" />
+              </div>
+              <div className="text-left">
+                <p className="text-sm font-medium text-gray-700">Archivo cargado</p>
+                <p className="text-xs text-gray-500">Clic para cambiar</p>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center">
+              <svg className="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+              <p className="text-sm font-medium text-gray-700">Subir archivo</p>
+              <p className="text-xs text-gray-500 mt-1">PNG, JPG o JPEG</p>
             </div>
           )}
-        </div>
+        </label>
+        <Input
+          id={id}
+          name={name}
+          type="file"
+          accept={accept}
+          onChange={currentHandler}
+          className="sr-only"
+        />
       </div>
     )
   }
 
   if (type === "textarea") {
     return (
-      <div className="space-y-2">
-        <Label htmlFor={id}>{label}</Label>
+      <div className="space-y-2 sm:col-span-2">
+        <Label htmlFor={id} className="text-sm font-medium">{label}</Label>
         <Textarea
           id={id}
           name={name}
@@ -679,20 +701,22 @@ const FormField: React.FC<{
           onChange={onChange}
           placeholder={placeholder}
           rows={rows}
+          className="resize-none"
         />
       </div>
     )
   }
 
   if (type === "select") {
+    // Los select ocupan 1 columna por defecto
     return (
-      <div className="space-y-2">
-        <Label htmlFor={id}>{label}</Label>
+      <div className="space-y-2 col-span-1">
+        <Label htmlFor={id} className="text-sm font-medium">{label}</Label>
         <Select
           value={value as string}
           onValueChange={(val) => onSelectChange(name, val)}
         >
-          <SelectTrigger id={id}>
+          <SelectTrigger id={id} className="h-10">
             <SelectValue placeholder={`Seleccione ${label}`} />
           </SelectTrigger>
           <SelectContent>
@@ -707,9 +731,23 @@ const FormField: React.FC<{
     )
   }
 
+  // Determinar si es un campo compacto que debe ocupar 1 columna
+  const isCompactField = type === "number" || 
+    name.includes("%") || 
+    name.includes("M2") ||
+    name.includes("LITROS") ||
+    name === "CODIGO POSTAL" ||
+    name === "NUM#" ||
+    name.startsWith("DISP") ||
+    name.includes("MANGUERA") ||
+    name.includes("TANQUE") ||
+    name.includes("TURNOS") ||
+    name.includes("OPERATIVOS") ||
+    name.includes("ADMINISTRATIVOS")
+
   return (
-    <div className="space-y-2">
-      <Label htmlFor={id}>{label}</Label>
+    <div className={`space-y-2 ${isCompactField ? "" : "sm:col-span-2"}`}>
+      <Label htmlFor={id} className="text-sm font-medium">{label}</Label>
       <Input
         id={id}
         name={name}
@@ -721,6 +759,7 @@ const FormField: React.FC<{
         min={min}
         max={max}
         step={step}
+        className="h-10"
       />
     </div>
   )
@@ -913,7 +952,8 @@ export default function FormSTPS() {
 
       // En producción usa la URL directa de N8N, en desarrollo usa el proxy
       const apiUrl = import.meta.env.VITE_N8N_WEBHOOK_URL || "/api/imagenes"
-      
+    
+      // Aqui se hace la peticion
       await fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -938,7 +978,7 @@ export default function FormSTPS() {
   if (isSubmitted) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white p-4">
-        <Card className="w-full max-w-2xl">
+        <Card className="w-full max-w-3xl">
           <CardContent className="pt-6">
             <div className="text-center space-y-4">
               <div className="flex justify-center">
@@ -963,11 +1003,11 @@ export default function FormSTPS() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white p-4">
-      <Card className="w-full max-w-2xl">
+      <Card className="w-full max-w-3xl">
         <CardHeader>
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
-              <CardTitle className="text-2xl">Formulario STPS - Cliente</CardTitle>
+              <CardTitle className="text-2xl">Formulario STPS - Clientes {new Date().getFullYear()}</CardTitle>
               <CardDescription>Complete la información requerida en {TOTAL_STEPS} sección(es)</CardDescription>
             </div>
             <div className="flex-shrink-0">
@@ -977,36 +1017,40 @@ export default function FormSTPS() {
         </CardHeader>
         <CardContent>
           <div className="mb-8">
-            <div className="flex items-center justify-between relative px-4">
-              {Array.from({ length: TOTAL_STEPS }, (_, i) => i + 1).map((s, index) => (
-                <div key={s} className="flex flex-col items-center relative">
-                  {index < TOTAL_STEPS - 1 && (
-                    <div
-                      className={`absolute top-5 h-0.5 transition-all duration-300 ${
-                        s < step ? "bg-primary" : "bg-muted"
-                      }`}
-                      style={{ left: "20px", width: "calc(100% + 60px)" }}
-                    />
-                  )}
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 relative z-10 ${
-                      s < step
-                        ? "bg-primary text-primary-foreground"
-                        : s === step
-                          ? "bg-primary text-primary-foreground ring-4 ring-primary/20"
-                          : "bg-muted text-muted-foreground"
-                    }`}
-                  >
-                    {s === TOTAL_STEPS ? <Check className="w-5 h-5" /> : <span className="font-semibold">{s}</span>}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="text-sm font-semibold text-foreground">Paso {step} de {TOTAL_STEPS}</span>
+                  <p className="text-xs text-muted-foreground mt-0.5">Completa todos los campos requeridos</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 shadow-lg">
+                    <span className="text-lg font-bold text-white">{Math.round((step / TOTAL_STEPS) * 100)}%</span>
                   </div>
                 </div>
-              ))}
+              </div>
+              <div className="relative h-3 bg-gradient-to-r from-gray-100 to-gray-200 rounded-full overflow-hidden shadow-inner">
+                <div 
+                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-green-400 via-green-500 to-emerald-500 rounded-full transition-all duration-700 ease-out shadow-md"
+                  style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 animate-pulse" />
+                </div>
+                <div 
+                  className="absolute inset-y-0 left-0 flex items-center justify-end pr-2"
+                  style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
+                >
+                  {step > 1 && (
+                    <div className="w-2 h-2 bg-white rounded-full shadow-lg" />
+                  )}
+                </div>
+              </div>
             </div>
           </div>
 
           <form onSubmit={handleSubmit}>
             {step < TOTAL_STEPS ? (
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 {currentFields.map((field) => (
                   <FormField
                     key={field.id}
