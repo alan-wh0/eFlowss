@@ -1361,66 +1361,67 @@ export default function FormSTPS() {
                 </div>
               </div>
             )}
+
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handlePrevious}
+                disabled={step === 1 || isLoading}
+                className="w-full sm:w-auto"
+              >
+                Anterior
+              </Button>
+              <div className="flex items-center gap-2 flex-wrap justify-center">
+                {Array.from({ length: TOTAL_STEPS - 1 }, (_, i) => i + 1).map(
+                  (s) => (
+                    <button
+                      key={s}
+                      type="button"
+                      onClick={() => setStep(s)}
+                      disabled={isLoading}
+                      className={`w-8 h-8 rounded-md flex items-center justify-center text-sm font-medium transition-all ${
+                        s === step
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted text-muted-foreground hover:bg-muted/80"
+                      } ${isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+                    >
+                      {s}
+                    </button>
+                  ),
+                )}
+              </div>
+              {step < TOTAL_STEPS ? (
+                <Button
+                  type="button"
+                  onClick={handleNext}
+                  disabled={isLoading}
+                  className="w-full sm:w-auto"
+                >
+                  Siguiente
+                </Button>
+              ) : (
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full sm:w-auto"
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Enviando...
+                    </>
+                  ) : (
+                    <>
+                      <Check className="mr-2 h-4 w-4" />
+                      Confirmar y Enviar
+                    </>
+                  )}
+                </Button>
+              )}
+            </div>
           </form>
         </CardContent>
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 p-2">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handlePrevious}
-            disabled={step === 1 || isLoading}
-            className="w-full sm:w-auto"
-          >
-            Anterior
-          </Button>
-          <div className="flex items-center gap-2 flex-wrap justify-center">
-            {Array.from({ length: TOTAL_STEPS - 1 }, (_, i) => i + 1).map(
-              (s) => (
-                <button
-                  key={s}
-                  type="button"
-                  onClick={() => setStep(s)}
-                  disabled={isLoading}
-                  className={`w-8 h-8 rounded-md flex items-center justify-center text-sm font-medium transition-all ${
-                    s === step
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted text-muted-foreground hover:bg-muted/80"
-                  } ${isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
-                >
-                  {s}
-                </button>
-              ),
-            )}
-          </div>
-          {step < TOTAL_STEPS ? (
-            <Button
-              type="button"
-              onClick={handleNext}
-              disabled={isLoading}
-              className="w-full sm:w-auto"
-            >
-              Siguiente
-            </Button>
-          ) : (
-            <Button
-              type="submit"
-              disabled={isLoading}
-              className="w-full sm:w-auto"
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Enviando...
-                </>
-              ) : (
-                <>
-                  <Check className="mr-2 h-4 w-4" />
-                  Confirmar y Enviar
-                </>
-              )}
-            </Button>
-          )}
-        </div>
       </Card>
     </div>
    </>
