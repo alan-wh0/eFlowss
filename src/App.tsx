@@ -1,417 +1,435 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { CheckCircle2, Check, Loader2 } from "lucide-react"
+import type React from "react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { CheckCircle2, Check, Loader2 } from "lucide-react";
 
-import logo from "../public/logo.jpg"
-
+import logo from "/Logo.png";
+import fondo from "/Fondo.png";
 
 interface FormData {
   // Sección 1 - Información General de la Empresa
-  "INSERTAR RAZÓN SOCIAL DE LA EMPRESA": string
-  "INSERTAR RFC DE LA EMPRESA": string
-  "LOGO": File | null
-  "IMAGEN": File | null
-  "IMAGEN2": File | null
-  "INSERTAR REPRESENTANTE LEGAL": string
-  "INSERTAR CORREO ELECTRÓNICO": string
-  "INSERTAR TELÉFONO": string
-  "INSERTAR DIRECCIÓN DE LA EMPRESA": string
-  "INSERTAR FECHA": string
+  "INSERTAR RAZÓN SOCIAL DE LA EMPRESA": string;
+  "INSERTAR RFC DE LA EMPRESA": string;
+  LOGO: File | null;
+  IMAGEN: File | null;
+  IMAGEN2: File | null;
+  "INSERTAR REPRESENTANTE LEGAL": string;
+  "INSERTAR CORREO ELECTRÓNICO": string;
+  "INSERTAR TELÉFONO": string;
+  "INSERTAR DIRECCIÓN DE LA EMPRESA": string;
+  "INSERTAR FECHA": string;
   // Sección 2 - Empleados, Turnos y Trabajadores
-  "CANTIDAD TOTAL DE TRABAJADORES": string
-  "CANTIDAD DE TURNOS": string
-  "TOTAL DE OPERATIVOS": string
-  "TOTAL DE ADMINISTRATIVOS": string
-  "FECHA DE INICIO DE OPERACIONES": string
-  "dd": string
-  "mm": string
-  "aaaa": string
-  "INSERTAR HORARIOS DE TRABAJO": string
-  "INSERTAR REGISTRO PATRONAL": string
+  "CANTIDAD TOTAL DE TRABAJADORES": string;
+  "CANTIDAD DE TURNOS": string;
+  "TOTAL DE OPERATIVOS": string;
+  "TOTAL DE ADMINISTRATIVOS": string;
+  "FECHA DE INICIO DE OPERACIONES": string;
+  dd: string;
+  mm: string;
+  aaaa: string;
+  "INSERTAR HORARIOS DE TRABAJO": string;
+  "INSERTAR REGISTRO PATRONAL": string;
   // Sección 3 - Domicilio Fiscal y Actividad Económica
-  "INSERTAR CALLE": string
-  "INSERTAR COLONIA": string
-  "INSERTAR CIUDAD": string
-  "CODIGO POSTAL": string
-  "NUM#": string
-  "INSERTAR MUNICIPIO": string
-  "INSERTAR ESTADO": string
-  "INSERTAR LOS METROS SOBRE EL NIVEL DEL MAR DEL CENTRO DE TRABAJO": string
+  "INSERTAR CALLE": string;
+  "INSERTAR COLONIA": string;
+  "INSERTAR CIUDAD": string;
+  "CODIGO POSTAL": string;
+  "NUM#": string;
+  "INSERTAR MUNICIPIO": string;
+  "INSERTAR ESTADO": string;
+  "INSERTAR LOS METROS SOBRE EL NIVEL DEL MAR DEL CENTRO DE TRABAJO": string;
   // Sección 4 - Vocales y Personal de Dirección
-  "INSERTAR VOCAL 1": string
-  "INSERTAR VOCAL 2": string
-  "INSERTAR VOCAL 3": string
-  "INSERTAR VOCAL 4": string
-  "INSERTAR COORDINADOR": string
-  "INSERTAR SECRETARIO": string
-  "el/la(COORDINADOR)": string
-  "el/la(SECRETARIO)": string
-  "el/la(VOCAL1)": string
-  "el/la(VOCAL2)": string
+  "INSERTAR VOCAL 1": string;
+  "INSERTAR VOCAL 2": string;
+  "INSERTAR VOCAL 3": string;
+  "INSERTAR VOCAL 4": string;
+  "INSERTAR COORDINADOR": string;
+  "INSERTAR SECRETARIO": string;
+  "el/la(COORDINADOR)": string;
+  "el/la(SECRETARIO)": string;
+  "el/la(VOCAL1)": string;
+  "el/la(VOCAL2)": string;
   // Sección 5 - Colindancias y Responsables
-  "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL NORTE": string
-  "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL SUR": string
-  "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL ESTE": string
-  "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL OESTE": string
-  "UNIDADES HABITACIONALES": string
-  "ESTABLECIMIENTOS DE ATENCION MEDICA": string
-  "CENTROS EDUCACIONALES": string
-  "PARQUES NACIONALES": string
-  "AREAS NATURALES PROTEGIDAS": string
-  "LINEAS DE ALTA TENSION": string
-  "GASODUCTOS": string
-  "POZOS DE ABASTECIMIENTO": string
-  "CUERPOS DE AGUA": string
-  "INSERTAR RESPONSABLE DE DESIGNADO": string
-  "INSERTAR EVALUADOR": string
-  "INSERTAR RESPONSABLE DEL DERECHO AL DESCANSO": string
-  "INSERTAR JEFE INMEDIATO": string
-  "NOMBRE DEL RESPONSABLE DE LA APLICACION": string
+  "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL NORTE": string;
+  "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL SUR": string;
+  "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL ESTE": string;
+  "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL OESTE": string;
+  "UNIDADES HABITACIONALES": string;
+  "ESTABLECIMIENTOS DE ATENCION MEDICA": string;
+  "CENTROS EDUCACIONALES": string;
+  "PARQUES NACIONALES": string;
+  "AREAS NATURALES PROTEGIDAS": string;
+  "LINEAS DE ALTA TENSION": string;
+  GASODUCTOS: string;
+  "POZOS DE ABASTECIMIENTO": string;
+  "CUERPOS DE AGUA": string;
+  "INSERTAR RESPONSABLE DE DESIGNADO": string;
+  "INSERTAR EVALUADOR": string;
+  "INSERTAR RESPONSABLE DEL DERECHO AL DESCANSO": string;
+  "INSERTAR JEFE INMEDIATO": string;
+  "NOMBRE DEL RESPONSABLE DE LA APLICACION": string;
   // Sección 6 - Responsables de Seguridad y Permisos
-  "INSERTAR RESPONSABLE DE SEGURIDAD Y SALUD": string
-  "INSERTAR PERMISO CRE": string
+  "INSERTAR RESPONSABLE DE SEGURIDAD Y SALUD": string;
+  "INSERTAR PERMISO CRE": string;
   // Sección 7 - Tanques
-  "TANQUE REGULAR": string
-  "TANQUE PREMIUM": string
-  "TANQUE DIESEL": string
-  "REGULAR LITROS": string
-  "PREMIUM LITROS": string
+  "TANQUE REGULAR": string;
+  "TANQUE PREMIUM": string;
+  "TANQUE DIESEL": string;
+  "REGULAR LITROS": string;
+  "PREMIUM LITROS": string;
   // Sección 8 - Litros de Combustible
-  "DIESEL LITROS": string
-  "EXT4": string
-  "EXT4 REGULAR": string
-  "REGULAR LITROS 4": string
-  "EXT5": string
-  "EXT5 PREMIUM": string
-  "PREMIUM LITROS 5": string
-  "XTIPOCOMLITROS1": string
-  "XTIPOCOMLITROS2": string
-  "TOTAL DE LITROS DE COMBUSTIBLE": string
-  "TOTAL DE TANQUES": string
-  "X CANTIDAD DE DISPENSARIOS": string
-  "INSERTAR NOMBRE DEL AREA 1": string
-  "INSERTAR NOMBRE DEL AREA 2": string
-  "OFICINAS M2": string
-  "AREA M2": string
+  "DIESEL LITROS": string;
+  EXT4: string;
+  "EXT4 REGULAR": string;
+  "REGULAR LITROS 4": string;
+  EXT5: string;
+  "EXT5 PREMIUM": string;
+  "PREMIUM LITROS 5": string;
+  XTIPOCOMLITROS1: string;
+  XTIPOCOMLITROS2: string;
+  "TOTAL DE LITROS DE COMBUSTIBLE": string;
+  "TOTAL DE TANQUES": string;
+  "X CANTIDAD DE DISPENSARIOS": string;
+  "INSERTAR NOMBRE DEL AREA 1": string;
+  "INSERTAR NOMBRE DEL AREA 2": string;
+  "OFICINAS M2": string;
+  "AREA M2": string;
   // Sección 9 - Superficies y Áreas
-  "TOTAL M2": string
-  "OFICINAS %": string
-  "AREA %": string
-  "INSERTAR NOMBRE DEL AREA 3": string
-  "AREA 3 M2": string
-  "AREA 3 %": string
-  "INSERTAR NOMBRE DEL AREA 4": string
-  "AREA 4 M2": string
-  "AREA 4 %": string
-  "INSERTAR NOMBRE DEL AREA 5": string
-  "AREA 5 M2": string
-  "AREA 5 %": string
-  "INSERTAR NOMBRE DEL AREA 6": string
-  "AREA 6 M2": string
-  "AREA 6 %": string
-  "INSERTAR NOMBRE DEL AREA 7": string
-  "AREA 7 M2": string
-  "AREA 7 %": string
-  "INSERTAR NOMBRE DEL AREA 8": string
-  "AREA 8 M2": string
-  "AREA 8 %": string
-  "INSERTAR NOMBRE DEL AREA 9": string
-  "AREA 9 M2": string
-  "AREA 9 %": string
-  "INSERTAR NOMBRE DEL AREA 10": string
-  "AREA 10 M2": string
-  "AREA 10 %": string
-  "INSERTAR NOMBRE DEL AREA 11": string
-  "AREA 11 M2": string
-  "AREA 11 %": string
-  "INSERTAR NOMBRE DEL AREA 12": string
-  "AREA 12 M2": string
-  "AREA 12 %": string
-  "INSERTAR NOMBRE DEL AREA 13": string
-  "AREA 13 M2": string
-  "AREA 13 %": string
-  "INSERTAR NOMBRE DEL AREA 14": string
-  "AREA 14 M2": string
-  "AREA 14 %": string
-  "MANGUERA 1R": string
-  "MANGUERA 2R": string
-  "MANGUERA 3R": string
-  "XTIPOCOM1": string
-  "XTIPOCOM2": string
+  "TOTAL M2": string;
+  "OFICINAS %": string;
+  "AREA %": string;
+  "INSERTAR NOMBRE DEL AREA 3": string;
+  "AREA 3 M2": string;
+  "AREA 3 %": string;
+  "INSERTAR NOMBRE DEL AREA 4": string;
+  "AREA 4 M2": string;
+  "AREA 4 %": string;
+  "INSERTAR NOMBRE DEL AREA 5": string;
+  "AREA 5 M2": string;
+  "AREA 5 %": string;
+  "INSERTAR NOMBRE DEL AREA 6": string;
+  "AREA 6 M2": string;
+  "AREA 6 %": string;
+  "INSERTAR NOMBRE DEL AREA 7": string;
+  "AREA 7 M2": string;
+  "AREA 7 %": string;
+  "INSERTAR NOMBRE DEL AREA 8": string;
+  "AREA 8 M2": string;
+  "AREA 8 %": string;
+  "INSERTAR NOMBRE DEL AREA 9": string;
+  "AREA 9 M2": string;
+  "AREA 9 %": string;
+  "INSERTAR NOMBRE DEL AREA 10": string;
+  "AREA 10 M2": string;
+  "AREA 10 %": string;
+  "INSERTAR NOMBRE DEL AREA 11": string;
+  "AREA 11 M2": string;
+  "AREA 11 %": string;
+  "INSERTAR NOMBRE DEL AREA 12": string;
+  "AREA 12 M2": string;
+  "AREA 12 %": string;
+  "INSERTAR NOMBRE DEL AREA 13": string;
+  "AREA 13 M2": string;
+  "AREA 13 %": string;
+  "INSERTAR NOMBRE DEL AREA 14": string;
+  "AREA 14 M2": string;
+  "AREA 14 %": string;
+  "MANGUERA 1R": string;
+  "MANGUERA 2R": string;
+  "MANGUERA 3R": string;
+  XTIPOCOM1: string;
+  XTIPOCOM2: string;
   // Sección 10 - Mangueras P y D
-  "MANGUERA 1P": string
-  "MANGUERA 2P": string
-  "MANGUERA 3P": string
-  "MANGUERA 1D": string
-  "MANGUERA 2D": string
-  "MANGUERA 3D": string
-  "DISP4": string
-  "MANGUERA 4R": string
-  "MANGUERA 4P": string
-  "MANGUERA 4D": string
-  "DISP5": string
-  "MANGUERA 5R": string
-  "MANGUERA 5P": string
-  "MANGUERA 5D": string
-  "DISP6": string
-  "MANGUERA 6R": string
-  "MANGUERA 6P": string
-  "MANGUERA 6D": string
-  "DISP7": string
-  "MANGUERA 7R": string
-  "MANGUERA 7P": string
-  "MANGUERA 7D": string
-  "DISP8": string
-  "MANGUERA 8R": string
-  "MANGUERA 8P": string
-  "MANGUERA 8D": string
-  "DISP9": string
-  "MANGUERA 9R": string
-  "MANGUERA 9P": string
-  "MANGUERA 9D": string
-  "DISP10": string
-  "MANGUERA 10R": string
-  "MANGUERA 10P": string
-  "MANGUERA 10D": string
-  "DISP11": string
-  "MANGUERA 11R": string
-  "MANGUERA 11P": string
-  "MANGUERA 11D": string
-  "DISP12": string
-  "MANGUERA 12R": string
-  "MANGUERA 12P": string
-  "MANGUERA 12D": string
-  "DISP13": string
-  "MANGUERA 13R": string
-  "MANGUERA 13P": string
-  "MANGUERA 13D": string
-  "DISP14": string
-  "MANGUERA 14R": string
-  "MANGUERA 14P": string
-  "MANGUERA 14D": string
-  "DISP15": string
-  "MANGUERA 15R": string
-  "MANGUERA 15P": string
-  "MANGUERA 15D": string
+  "MANGUERA 1P": string;
+  "MANGUERA 2P": string;
+  "MANGUERA 3P": string;
+  "MANGUERA 1D": string;
+  "MANGUERA 2D": string;
+  "MANGUERA 3D": string;
+  DISP4: string;
+  "MANGUERA 4R": string;
+  "MANGUERA 4P": string;
+  "MANGUERA 4D": string;
+  DISP5: string;
+  "MANGUERA 5R": string;
+  "MANGUERA 5P": string;
+  "MANGUERA 5D": string;
+  DISP6: string;
+  "MANGUERA 6R": string;
+  "MANGUERA 6P": string;
+  "MANGUERA 6D": string;
+  DISP7: string;
+  "MANGUERA 7R": string;
+  "MANGUERA 7P": string;
+  "MANGUERA 7D": string;
+  DISP8: string;
+  "MANGUERA 8R": string;
+  "MANGUERA 8P": string;
+  "MANGUERA 8D": string;
+  DISP9: string;
+  "MANGUERA 9R": string;
+  "MANGUERA 9P": string;
+  "MANGUERA 9D": string;
+  DISP10: string;
+  "MANGUERA 10R": string;
+  "MANGUERA 10P": string;
+  "MANGUERA 10D": string;
+  DISP11: string;
+  "MANGUERA 11R": string;
+  "MANGUERA 11P": string;
+  "MANGUERA 11D": string;
+  DISP12: string;
+  "MANGUERA 12R": string;
+  "MANGUERA 12P": string;
+  "MANGUERA 12D": string;
+  DISP13: string;
+  "MANGUERA 13R": string;
+  "MANGUERA 13P": string;
+  "MANGUERA 13D": string;
+  DISP14: string;
+  "MANGUERA 14R": string;
+  "MANGUERA 14P": string;
+  "MANGUERA 14D": string;
+  DISP15: string;
+  "MANGUERA 15R": string;
+  "MANGUERA 15P": string;
+  "MANGUERA 15D": string;
 }
 
 type FieldConfig = {
-  id: string
-  name: keyof FormData | string
-  label: string
-  type?: string
-  placeholder?: string
-  rows?: number
-  maxLength?: number
-  min?: number | string
-  max?: number | string
-  step?: string
-  accept?: string
-  options?: { value: string; label: string }[]
-  value?: string
-}
+  id: string;
+  name: keyof FormData | string;
+  label: string;
+  type?: string;
+  placeholder?: string;
+  rows?: number;
+  maxLength?: number;
+  min?: number | string;
+  max?: number | string;
+  step?: string;
+  accept?: string;
+  options?: { value: string; label: string }[];
+  value?: string;
+  rowGroup?: string;
+};
 
 // Estado inicial centralizado - elimina duplicación
 const getInitialFormData = (): FormData => {
   const initialData: FormData = {
-  "INSERTAR RAZÓN SOCIAL DE LA EMPRESA": "",
-  "INSERTAR RFC DE LA EMPRESA": "",
-  "LOGO": null,
-  "IMAGEN": null,
-  "IMAGEN2": null,
-  "INSERTAR REPRESENTANTE LEGAL": "",
-  "INSERTAR CORREO ELECTRÓNICO": "",
-  "INSERTAR TELÉFONO": "",
-  "INSERTAR DIRECCIÓN DE LA EMPRESA": "",
-  "INSERTAR FECHA": "",
-  "CANTIDAD TOTAL DE TRABAJADORES": "",
-  "CANTIDAD DE TURNOS": "",
-  "TOTAL DE OPERATIVOS": "",
-  "TOTAL DE ADMINISTRATIVOS": "",
-  "FECHA DE INICIO DE OPERACIONES": "",
-  "dd": "",
-  "mm": "",
-  "aaaa": "",
-  "INSERTAR HORARIOS DE TRABAJO": "",
-  "INSERTAR REGISTRO PATRONAL": "",
-  "INSERTAR CALLE": "",
-  "INSERTAR COLONIA": "",
-  "INSERTAR CIUDAD": "",
-  "CODIGO POSTAL": "",
-  "NUM#": "",
-  "INSERTAR MUNICIPIO": "",
-  "INSERTAR ESTADO": "",
-  "INSERTAR LOS METROS SOBRE EL NIVEL DEL MAR DEL CENTRO DE TRABAJO": "",
-  "INSERTAR VOCAL 1": "",
-  "INSERTAR VOCAL 2": "",
-  "INSERTAR VOCAL 3": "",
-  "INSERTAR VOCAL 4": "",
-  "INSERTAR COORDINADOR": "",
-  "INSERTAR SECRETARIO": "",
-  "el/la(COORDINADOR)": "",
-  "el/la(SECRETARIO)": "",
-  "el/la(VOCAL1)": "",
-  "el/la(VOCAL2)": "",
-  "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL NORTE": "",
-  "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL SUR": "",
-  "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL ESTE": "",
-  "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL OESTE": "",
-  "UNIDADES HABITACIONALES": "",
-  "ESTABLECIMIENTOS DE ATENCION MEDICA": "",
-  "CENTROS EDUCACIONALES": "",
-  "PARQUES NACIONALES": "",
-  "AREAS NATURALES PROTEGIDAS": "",
-  "LINEAS DE ALTA TENSION": "",
-  "GASODUCTOS": "",
-  "POZOS DE ABASTECIMIENTO": "",
-  "CUERPOS DE AGUA": "",
-  "INSERTAR RESPONSABLE DE DESIGNADO": "",
-  "INSERTAR EVALUADOR": "",
-  "INSERTAR RESPONSABLE DEL DERECHO AL DESCANSO": "",
-  "INSERTAR JEFE INMEDIATO": "",
-  "NOMBRE DEL RESPONSABLE DE LA APLICACION": "",
-  "INSERTAR RESPONSABLE DE SEGURIDAD Y SALUD": "",
-  "INSERTAR PERMISO CRE": "",
-  "TANQUE REGULAR": "",
-  "TANQUE PREMIUM": "",
-  "TANQUE DIESEL": "",
-  "REGULAR LITROS": "",
-  "PREMIUM LITROS": "",
-  "DIESEL LITROS": "",
-  "EXT4": "",
-  "EXT4 REGULAR": "",
-  "REGULAR LITROS 4": "",
-  "EXT5": "",
-  "EXT5 PREMIUM": "",
-  "PREMIUM LITROS 5": "",
-  "XTIPOCOMLITROS1": "",
-  "XTIPOCOMLITROS2": "",
-  "TOTAL DE LITROS DE COMBUSTIBLE": "",
-  "TOTAL DE TANQUES": "",
-  "X CANTIDAD DE DISPENSARIOS": "",
-  "INSERTAR NOMBRE DEL AREA 1": "",
-  "INSERTAR NOMBRE DEL AREA 2": "",
-  "OFICINAS M2": "",
-  "AREA M2": "",
-  "TOTAL M2": "",
-  "OFICINAS %": "",
-  "AREA %": "",
-  "INSERTAR NOMBRE DEL AREA 3": "",
-  "AREA 3 M2": "",
-  "AREA 3 %": "",
-  "INSERTAR NOMBRE DEL AREA 4": "",
-  "AREA 4 M2": "",
-  "AREA 4 %": "",
-  "INSERTAR NOMBRE DEL AREA 5": "",
-  "AREA 5 M2": "",
-  "AREA 5 %": "",
-  "INSERTAR NOMBRE DEL AREA 6": "",
-  "AREA 6 M2": "",
-  "AREA 6 %": "",
-  "INSERTAR NOMBRE DEL AREA 7": "",
-  "AREA 7 M2": "",
-  "AREA 7 %": "",
-  "INSERTAR NOMBRE DEL AREA 8": "",
-  "AREA 8 M2": "",
-  "AREA 8 %": "",
-  "INSERTAR NOMBRE DEL AREA 9": "",
-  "AREA 9 M2": "",
-  "AREA 9 %": "",
-  "INSERTAR NOMBRE DEL AREA 10": "",
-  "AREA 10 M2": "",
-  "AREA 10 %": "",
-  "INSERTAR NOMBRE DEL AREA 11": "",
-  "AREA 11 M2": "",
-  "AREA 11 %": "",
-  "INSERTAR NOMBRE DEL AREA 12": "",
-  "AREA 12 M2": "",
-  "AREA 12 %": "",
-  "INSERTAR NOMBRE DEL AREA 13": "",
-  "AREA 13 M2": "",
-  "AREA 13 %": "",
-  "INSERTAR NOMBRE DEL AREA 14": "",
-  "AREA 14 M2": "",
-  "AREA 14 %": "",
-  "MANGUERA 1R": "",
-  "MANGUERA 2R": "",
-  "MANGUERA 3R": "",
-  "XTIPOCOM1": "",
-  "XTIPOCOM2": "",
-  "MANGUERA 1P": "",
-  "MANGUERA 2P": "",
-  "MANGUERA 3P": "",
-  "MANGUERA 1D": "",
-  "MANGUERA 2D": "",
-  "MANGUERA 3D": "",
-  "DISP4": "",
-  "MANGUERA 4R": "",
-  "MANGUERA 4P": "",
-  "MANGUERA 4D": "",
-  "DISP5": "",
-  "MANGUERA 5R": "",
-  "MANGUERA 5P": "",
-  "MANGUERA 5D": "",
-  "DISP6": "",
-  "MANGUERA 6R": "",
-  "MANGUERA 6P": "",
-  "MANGUERA 6D": "",
-  "DISP7": "",
-  "MANGUERA 7R": "",
-  "MANGUERA 7P": "",
-  "MANGUERA 7D": "",
-  "DISP8": "",
-  "MANGUERA 8R": "",
-  "MANGUERA 8P": "",
-  "MANGUERA 8D": "",
-  "DISP9": "",
-  "MANGUERA 9R": "",
-  "MANGUERA 9P": "",
-  "MANGUERA 9D": "",
-  "DISP10": "",
-  "MANGUERA 10R": "",
-  "MANGUERA 10P": "",
-  "MANGUERA 10D": "",
-  "DISP11": "",
-  "MANGUERA 11R": "",
-  "MANGUERA 11P": "",
-  "MANGUERA 11D": "",
-  "DISP12": "",
-  "MANGUERA 12R": "",
-  "MANGUERA 12P": "",
-  "MANGUERA 12D": "",
-  "DISP13": "",
-  "MANGUERA 13R": "",
-  "MANGUERA 13P": "",
-  "MANGUERA 13D": "",
-  "DISP14": "",
-  "MANGUERA 14R": "",
-  "MANGUERA 14P": "",
-  "MANGUERA 14D": "",
-  "DISP15": "",
-  "MANGUERA 15R": "",
-  "MANGUERA 15P": "",
-  "MANGUERA 15D": "",
-  }
+    "INSERTAR RAZÓN SOCIAL DE LA EMPRESA": "",
+    "INSERTAR RFC DE LA EMPRESA": "",
+    LOGO: null,
+    IMAGEN: null,
+    IMAGEN2: null,
+    "INSERTAR REPRESENTANTE LEGAL": "",
+    "INSERTAR CORREO ELECTRÓNICO": "",
+    "INSERTAR TELÉFONO": "",
+    "INSERTAR DIRECCIÓN DE LA EMPRESA": "",
+    "INSERTAR FECHA": "",
+    "CANTIDAD TOTAL DE TRABAJADORES": "",
+    "CANTIDAD DE TURNOS": "",
+    "TOTAL DE OPERATIVOS": "",
+    "TOTAL DE ADMINISTRATIVOS": "",
+    "FECHA DE INICIO DE OPERACIONES": "",
+    dd: "",
+    mm: "",
+    aaaa: "",
+    "INSERTAR HORARIOS DE TRABAJO": "",
+    "INSERTAR REGISTRO PATRONAL": "",
+    "INSERTAR CALLE": "",
+    "INSERTAR COLONIA": "",
+    "INSERTAR CIUDAD": "",
+    "CODIGO POSTAL": "",
+    "NUM#": "",
+    "INSERTAR MUNICIPIO": "",
+    "INSERTAR ESTADO": "",
+    "INSERTAR LOS METROS SOBRE EL NIVEL DEL MAR DEL CENTRO DE TRABAJO": "",
+    "INSERTAR VOCAL 1": "",
+    "INSERTAR VOCAL 2": "",
+    "INSERTAR VOCAL 3": "",
+    "INSERTAR VOCAL 4": "",
+    "INSERTAR COORDINADOR": "",
+    "INSERTAR SECRETARIO": "",
+    "el/la(COORDINADOR)": "",
+    "el/la(SECRETARIO)": "",
+    "el/la(VOCAL1)": "",
+    "el/la(VOCAL2)": "",
+    "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL NORTE": "",
+    "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL SUR": "",
+    "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL ESTE": "",
+    "INSERTAR COLINDANCIAS DEL CENTRO DE TRABAJO HACIA EL OESTE": "",
+    "UNIDADES HABITACIONALES": "",
+    "ESTABLECIMIENTOS DE ATENCION MEDICA": "",
+    "CENTROS EDUCACIONALES": "",
+    "PARQUES NACIONALES": "",
+    "AREAS NATURALES PROTEGIDAS": "",
+    "LINEAS DE ALTA TENSION": "",
+    GASODUCTOS: "",
+    "POZOS DE ABASTECIMIENTO": "",
+    "CUERPOS DE AGUA": "",
+    "INSERTAR RESPONSABLE DE DESIGNADO": "",
+    "INSERTAR EVALUADOR": "",
+    "INSERTAR RESPONSABLE DEL DERECHO AL DESCANSO": "",
+    "INSERTAR JEFE INMEDIATO": "",
+    "NOMBRE DEL RESPONSABLE DE LA APLICACION": "",
+    "INSERTAR RESPONSABLE DE SEGURIDAD Y SALUD": "",
+    "INSERTAR PERMISO CRE": "",
+    "TANQUE REGULAR": "",
+    "TANQUE PREMIUM": "",
+    "TANQUE DIESEL": "",
+    "REGULAR LITROS": "",
+    "PREMIUM LITROS": "",
+    "DIESEL LITROS": "",
+    EXT4: "",
+    "EXT4 REGULAR": "",
+    "REGULAR LITROS 4": "",
+    EXT5: "",
+    "EXT5 PREMIUM": "",
+    "PREMIUM LITROS 5": "",
+    XTIPOCOMLITROS1: "",
+    XTIPOCOMLITROS2: "",
+    "TOTAL DE LITROS DE COMBUSTIBLE": "",
+    "TOTAL DE TANQUES": "",
+    "X CANTIDAD DE DISPENSARIOS": "",
+    "INSERTAR NOMBRE DEL AREA 1": "",
+    "INSERTAR NOMBRE DEL AREA 2": "",
+    "OFICINAS M2": "",
+    "AREA M2": "",
+    "TOTAL M2": "",
+    "OFICINAS %": "",
+    "AREA %": "",
+    "INSERTAR NOMBRE DEL AREA 3": "",
+    "AREA 3 M2": "",
+    "AREA 3 %": "",
+    "INSERTAR NOMBRE DEL AREA 4": "",
+    "AREA 4 M2": "",
+    "AREA 4 %": "",
+    "INSERTAR NOMBRE DEL AREA 5": "",
+    "AREA 5 M2": "",
+    "AREA 5 %": "",
+    "INSERTAR NOMBRE DEL AREA 6": "",
+    "AREA 6 M2": "",
+    "AREA 6 %": "",
+    "INSERTAR NOMBRE DEL AREA 7": "",
+    "AREA 7 M2": "",
+    "AREA 7 %": "",
+    "INSERTAR NOMBRE DEL AREA 8": "",
+    "AREA 8 M2": "",
+    "AREA 8 %": "",
+    "INSERTAR NOMBRE DEL AREA 9": "",
+    "AREA 9 M2": "",
+    "AREA 9 %": "",
+    "INSERTAR NOMBRE DEL AREA 10": "",
+    "AREA 10 M2": "",
+    "AREA 10 %": "",
+    "INSERTAR NOMBRE DEL AREA 11": "",
+    "AREA 11 M2": "",
+    "AREA 11 %": "",
+    "INSERTAR NOMBRE DEL AREA 12": "",
+    "AREA 12 M2": "",
+    "AREA 12 %": "",
+    "INSERTAR NOMBRE DEL AREA 13": "",
+    "AREA 13 M2": "",
+    "AREA 13 %": "",
+    "INSERTAR NOMBRE DEL AREA 14": "",
+    "AREA 14 M2": "",
+    "AREA 14 %": "",
+    "MANGUERA 1R": "",
+    "MANGUERA 2R": "",
+    "MANGUERA 3R": "",
+    XTIPOCOM1: "",
+    XTIPOCOM2: "",
+    "MANGUERA 1P": "",
+    "MANGUERA 2P": "",
+    "MANGUERA 3P": "",
+    "MANGUERA 1D": "",
+    "MANGUERA 2D": "",
+    "MANGUERA 3D": "",
+    DISP4: "",
+    "MANGUERA 4R": "",
+    "MANGUERA 4P": "",
+    "MANGUERA 4D": "",
+    DISP5: "",
+    "MANGUERA 5R": "",
+    "MANGUERA 5P": "",
+    "MANGUERA 5D": "",
+    DISP6: "",
+    "MANGUERA 6R": "",
+    "MANGUERA 6P": "",
+    "MANGUERA 6D": "",
+    DISP7: "",
+    "MANGUERA 7R": "",
+    "MANGUERA 7P": "",
+    "MANGUERA 7D": "",
+    DISP8: "",
+    "MANGUERA 8R": "",
+    "MANGUERA 8P": "",
+    "MANGUERA 8D": "",
+    DISP9: "",
+    "MANGUERA 9R": "",
+    "MANGUERA 9P": "",
+    "MANGUERA 9D": "",
+    DISP10: "",
+    "MANGUERA 10R": "",
+    "MANGUERA 10P": "",
+    "MANGUERA 10D": "",
+    DISP11: "",
+    "MANGUERA 11R": "",
+    "MANGUERA 11P": "",
+    "MANGUERA 11D": "",
+    DISP12: "",
+    "MANGUERA 12R": "",
+    "MANGUERA 12P": "",
+    "MANGUERA 12D": "",
+    DISP13: "",
+    "MANGUERA 13R": "",
+    "MANGUERA 13P": "",
+    "MANGUERA 13D": "",
+    DISP14: "",
+    "MANGUERA 14R": "",
+    "MANGUERA 14P": "",
+    "MANGUERA 14D": "",
+    DISP15: "",
+    "MANGUERA 15R": "",
+    "MANGUERA 15P": "",
+    "MANGUERA 15D": "",
+  };
 
   // Aplicar valores por defecto desde FORM_SECTIONS
-  Object.values(FORM_SECTIONS).forEach(section => {
-    section.forEach(field => {
-      if (field.value !== undefined && field.name !== "LOGO" && field.name !== "IMAGEN" && field.name !== "IMAGEN2") {
-        initialData[field.name as keyof FormData] = field.value as any
+  Object.values(FORM_SECTIONS).forEach((section) => {
+    section.forEach((field) => {
+      if (
+        field.value !== undefined &&
+        field.name !== "LOGO" &&
+        field.name !== "IMAGEN" &&
+        field.name !== "IMAGEN2"
+      ) {
+        initialData[field.name as keyof FormData] = field.value as any;
       }
-    })
-  })
+    });
+  });
 
-  return initialData
-}
+  return initialData;
+};
 
 // Configuración de campos por sección - centraliza estructura del formulario
 const FORM_SECTIONS: Record<number, FieldConfig[]> = {
@@ -498,10 +516,10 @@ const FORM_SECTIONS: Record<number, FieldConfig[]> = {
     { id: "premiumLitros5", name: "PREMIUM LITROS 5", label: "Cantidad de Litros almacenados del tanque 5", type: "number", placeholder: "Ingrese la cantidad de litros del tanque 5", step: "1", min: "0" },
   ],
   8: [
-    { id: "xtipocom1", name: "XTIPOCOM1", label: "Tipo de combustible si es Bipartido 1", placeholder: "Ingrese el tipo de combustible si es el tanque es bipartido 1" },
-    { id: "xtipoCom1", name: "XTIPOCOMLITROS1", label: "Cantidad de Combustible almacenado del tanque Bipartido 1", type: "number", placeholder: "Ingrese la cantidad de litros del tipo de combustible bipartido 1", step: "1", min: "0" },
-    { id: "xtipocom2", name: "XTIPOCOM2", label: "Tipo de combustible si es Bipartido 2", placeholder: "Ingrese el tipo de combustible si es el tanque es bipartido 2" },
-    { id: "xtipoCom2", name: "XTIPOCOMLITROS2", label: "Cantidad de Combustible almacenado del tanque Bipartido 1.1", type: "number", placeholder: "Ingrese la cantidad de litros del tipo de combustible bipartido 2", step: "1", min: "0" },
+    { id: "xtipocom1", name: "XTIPOCOM1", label: "Tipo de combustible tanque bipartido apartado 1", placeholder: "Ingrese el tipo de combustible si es el tanque es bipartido 1", rowGroup: "bipartido1" },
+    { id: "xtipoCom1", name: "XTIPOCOMLITROS1", label: "Cantidad de Combustible almacenado del tanque bipartido apartado 1", type: "number", placeholder: "Ingrese la cantidad de litros del tipo de combustible bipartido 1", step: "1", min: "0", rowGroup: "bipartido1" },
+    { id: "xtipocom2", name: "XTIPOCOM2", label: "Tipo de combustible tanque bipartido apartado 2", placeholder: "Ingrese el tipo de combustible si es el tanque es bipartido 2", rowGroup: "bipartido2" },
+    { id: "xtipoCom2", name: "XTIPOCOMLITROS2", label: "Cantidad de Combustible almacenado del tanque bipartido apartado 2", type: "number", placeholder: "Ingrese la cantidad de litros del tipo de combustible bipartido 2", step: "1", min: "0", rowGroup: "bipartido2" },
   ],
   9: [
     { id: "manguera1R", name: "MANGUERA 1R", label: "Manguera  Regular 1", placeholder: "Ingrese información manguera regular 1" },
@@ -514,53 +532,41 @@ const FORM_SECTIONS: Record<number, FieldConfig[]> = {
     { id: "manguera3P", name: "MANGUERA 3P", label: "Manguera  Premium 3", placeholder: "Ingrese información manguera premium 3" },
     { id: "manguera3D", name: "MANGUERA 3D", label: "Manguera  Diesel 3", placeholder: "Ingrese información manguera diesel 3" },
     { id: "headingDisp4", name: "heading", label: "En caso de que existan más dispensarios, rellenar los datos.", type: "heading" },
-    { id: "disp4", name: "DISP4", label: "Dispensario 4", type: "text", placeholder: "Ingresar solo el numero del dispensario (4)", maxLength: 1 },
     { id: "manguera4R", name: "MANGUERA 4R", label: "Manguera  Regular 4", placeholder: "Ingrese información manguera regular 4" },
     { id: "manguera4P", name: "MANGUERA 4P", label: "Manguera  Premium 4", placeholder: "Ingrese información manguera premium 4" },
     { id: "manguera4D", name: "MANGUERA 4D", label: "Manguera  Diesel 4", placeholder: "Ingrese información manguera diesel 4" },
-    { id: "disp5", name: "DISP5", label: "Dispensario 5", type: "text", placeholder: "Ingresar solo el numero del dispensario (5)", maxLength: 1 },
     { id: "manguera5R", name: "MANGUERA 5R", label: "Manguera  Regular 5", placeholder: "Ingrese información manguera regular 5" },
     { id: "manguera5P", name: "MANGUERA 5P", label: "Manguera  Premium 5", placeholder: "Ingrese información manguera premium 5" },
     { id: "manguera5D", name: "MANGUERA 5D", label: "Manguera  Diesel 5", placeholder: "Ingrese información manguera diesel 5" },
-    { id: "disp6", name: "DISP6", label: "Dispensario 6", type: "text", placeholder: "Ingresar solo el numero del dispensario (6)", maxLength: 1 },
     { id: "manguera6R", name: "MANGUERA 6R", label: "Manguera  Regular 6", placeholder: "Ingrese información manguera regular 6" },
     { id: "manguera6P", name: "MANGUERA 6P", label: "Manguera  Premium 6", placeholder: "Ingrese información manguera premium 6" },
     { id: "manguera6D", name: "MANGUERA 6D", label: "Manguera  Diesel 6", placeholder: "Ingrese información manguera diesel 6" },
-    { id: "disp7", name: "DISP7", label: "Dispensario 7", type: "text", placeholder: "Ingresar solo el numero del dispensario (7)", maxLength: 1 },
     { id: "manguera7R", name: "MANGUERA 7R", label: "Manguera  Regular 7", placeholder: "Ingrese información manguera regular 7" },
     { id: "manguera7P", name: "MANGUERA 7P", label: "Manguera  Premium 7", placeholder: "Ingrese información manguera premium 7" },
     { id: "manguera7D", name: "MANGUERA 7D", label: "Manguera  Diesel 7", placeholder: "Ingrese información manguera diesel 7" },
-    { id: "disp8", name: "DISP8", label: "Dispensario 8", type: "text", placeholder: "Ingresar solo el numero del dispensario (8)", maxLength: 1 },
     { id: "manguera8R", name: "MANGUERA 8R", label: "Manguera  Regular 8", placeholder: "Ingrese información manguera regular 8" },
     { id: "manguera8P", name: "MANGUERA 8P", label: "Manguera  Premium 8", placeholder: "Ingrese información manguera premium 8" },
     { id: "manguera8D", name: "MANGUERA 8D", label: "Manguera  Diesel 8", placeholder: "Ingrese información manguera diesel 8" },
   ],
   10: [
-    { id: "disp9", name: "DISP9", label: "Dispensario 9", type: "text", placeholder: "Ingresar solo el numero del dispensario (9)", maxLength: 1 },
     { id: "manguera9R", name: "MANGUERA 9R", label: "Manguera  Regular 9", placeholder: "Ingrese información manguera regular 9" },
     { id: "manguera9P", name: "MANGUERA 9P", label: "Manguera  Premium 9", placeholder: "Ingrese información manguera premium 9" },
     { id: "manguera9D", name: "MANGUERA 9D", label: "Manguera  Diesel 9", placeholder: "Ingrese información manguera diesel 9" },
-    { id: "disp10", name: "DISP10", label: "Dispensario 10", type: "text", placeholder: "Ingresar solo el numero del dispensario (10)", maxLength: 2 },
     { id: "manguera10R", name: "MANGUERA 10R", label: "Manguera  Regular 10", placeholder: "Ingrese información manguera regular 10" },
     { id: "manguera10P", name: "MANGUERA 10P", label: "Manguera  Premium 10", placeholder: "Ingrese información manguera premium 10" },
     { id: "manguera10D", name: "MANGUERA 10D", label: "Manguera  Diesel 10", placeholder: "Ingrese información manguera diesel 10" },
-    { id: "disp11", name: "DISP11", label: "Dispensario 11", type: "text", placeholder: "Ingresar solo el numero del dispensario (11)", maxLength: 2 },
     { id: "manguera11R", name: "MANGUERA 11R", label: "Manguera  Regular 11", placeholder: "Ingrese información manguera regular 11" },
     { id: "manguera11P", name: "MANGUERA 11P", label: "Manguera  Premium 11", placeholder: "Ingrese información manguera premium 11" },
     { id: "manguera11D", name: "MANGUERA 11D", label: "Manguera  Diesel 11", placeholder: "Ingrese información manguera diesel 11" },
-    { id: "disp12", name: "DISP12", label: "Dispensario 12", type: "text", placeholder: "Ingresar solo el numero del dispensario (12)", maxLength: 2 },
     { id: "manguera12R", name: "MANGUERA 12R", label: "Manguera  Regular 12", placeholder: "Ingrese información manguera regular 12" },
     { id: "manguera12P", name: "MANGUERA 12P", label: "Manguera  Premium 12", placeholder: "Ingrese información manguera premium 12" },
     { id: "manguera12D", name: "MANGUERA 12D", label: "Manguera  Diesel 12", placeholder: "Ingrese información manguera diesel 12" },
-    { id: "disp13", name: "DISP13", label: "Dispensario 13", type: "text", placeholder: "Ingresar solo el numero del dispensario (13)", maxLength: 2 },
     { id: "manguera13R", name: "MANGUERA 13R", label: "Manguera  Regular 13", placeholder: "Ingrese información manguera regular 13" },
     { id: "manguera13P", name: "MANGUERA 13P", label: "Manguera  Premium 13", placeholder: "Ingrese información manguera premium 13" },
     { id: "manguera13D", name: "MANGUERA 13D", label: "Manguera  Diesel 13", placeholder: "Ingrese información manguera diesel 13" },
-    { id: "disp14", name: "DISP14", label: "Dispensario 14", type: "text", placeholder: "Ingresar solo el numero del dispensario (14)", maxLength: 2 },
     { id: "manguera14R", name: "MANGUERA 14R", label: "Manguera  Regular 14", placeholder: "Ingrese información manguera regular 14" },
     { id: "manguera14P", name: "MANGUERA 14P", label: "Manguera  Premium 14", placeholder: "Ingrese información manguera premium 14" },
     { id: "manguera14D", name: "MANGUERA 14D", label: "Manguera  Diesel 14", placeholder: "Ingrese información manguera diesel 14" },
-    { id: "disp15", name: "DISP15", label: "Dispensario 15", type: "text", placeholder: "Ingresar solo el numero del dispensario (15)", maxLength: 2 },
     { id: "manguera15R", name: "MANGUERA 15R", label: "Manguera  Regular 15", placeholder: "Ingrese información manguera regular 15" },
     { id: "manguera15P", name: "MANGUERA 15P", label: "Manguera  Premium 15", placeholder: "Ingrese información manguera premium 15" },
     { id: "manguera15D", name: "MANGUERA 15D", label: "Manguera  Diesel 15", placeholder: "Ingrese información manguera diesel 15" },
@@ -612,66 +618,126 @@ const FORM_SECTIONS: Record<number, FieldConfig[]> = {
     { id: "area14M2", name: "AREA 14 M2", label: "Superficie del área 14 en m2", type: "number", placeholder: "Ingrese los m2 del área 14", step: "1", min: "0" },
     { id: "area14Porc", name: "AREA 14 %", label: "Superficie del área 14 en porcentaje (%)", type: "number", placeholder: "Ingrese el porcentaje del área 14", step: "1", min: "0" },
   ],
-}
+};
 
-const TOTAL_STEPS = 13
+const TOTAL_STEPS = 13;
 
 // Componente helper para renderizar un campo
 const FormField: React.FC<{
-  field: FieldConfig
-  value: string | File | null
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
-  onSelectChange: (name: string, value: string) => void
-  onLogoChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onImagenChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onImagen2Change?: (e: React.ChangeEvent<HTMLInputElement>) => void
-  logoPreview?: string | null
-  imagenPreview?: string | null
-  imagen2Preview?: string | null
-}> = ({ field, value, onChange, onSelectChange, onLogoChange, onImagenChange, onImagen2Change, logoPreview, imagenPreview, imagen2Preview }) => {
-  const { id, name, label, type = "text", placeholder, rows, maxLength, min, max, step, accept, options } = field
+  field: FieldConfig;
+  value: string | File | null;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
+  onSelectChange: (name: string, value: string) => void;
+  onLogoChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onImagenChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onImagen2Change?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  logoPreview?: string | null;
+  imagenPreview?: string | null;
+  imagen2Preview?: string | null;
+  disableColSpan?: boolean;
+}> = ({
+  field,
+  value,
+  onChange,
+  onSelectChange,
+  onLogoChange,
+  onImagenChange,
+  onImagen2Change,
+  logoPreview,
+  imagenPreview,
+  imagen2Preview,
+  disableColSpan = false,
+}) => {
+  const {
+    id,
+    name,
+    label,
+    type = "text",
+    placeholder,
+    rows,
+    maxLength,
+    min,
+    max,
+    step,
+    accept,
+    options,
+  } = field;
 
   if (type === "heading") {
     return (
       <div className="pt-4 pb-2 sm:col-span-2">
-        <h3 className="text-base font-semibold text-foreground border-b pb-2">{label}</h3>
+        <h3 className="text-base font-semibold text-foreground border-b pb-2">
+          {label}
+        </h3>
       </div>
-    )
+    );
   }
 
   if (type === "file") {
-    const isLogoField = name === "LOGO"
-    const isImagenField = name === "IMAGEN"
-    const isImagen2Field = name === "IMAGEN2"
-    
-    const currentHandler = isLogoField ? onLogoChange : isImagenField ? onImagenChange : isImagen2Field ? onImagen2Change : undefined
-    const currentPreview = isLogoField ? logoPreview : isImagenField ? imagenPreview : isImagen2Field ? imagen2Preview : null
-    
+    const isLogoField = name === "LOGO";
+    const isImagenField = name === "IMAGEN";
+    const isImagen2Field = name === "IMAGEN2";
+
+    const currentHandler = isLogoField
+      ? onLogoChange
+      : isImagenField
+        ? onImagenChange
+        : isImagen2Field
+          ? onImagen2Change
+          : undefined;
+    const currentPreview = isLogoField
+      ? logoPreview
+      : isImagenField
+        ? imagenPreview
+        : isImagen2Field
+          ? imagen2Preview
+          : null;
+
     return (
       <div className="space-y-2">
-        <Label htmlFor={id} className="text-sm font-medium">{label}</Label>
-        <label 
+        <Label htmlFor={id} className="text-sm font-medium">
+          {label}
+        </Label>
+        <label
           htmlFor={id}
           className={`group flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer transition-all ${
-            currentPreview 
-              ? "border-primary/50 bg-primary/5" 
+            currentPreview
+              ? "border-primary/50 bg-primary/5"
               : "border-gray-300 hover:border-primary/50 hover:bg-gray-50"
           }`}
         >
           {currentPreview ? (
             <div className="flex items-center gap-3">
               <div className="w-16 h-16 rounded-lg overflow-hidden border border-gray-200 shadow-sm">
-                <img src={currentPreview} alt={`${label} preview`} className="w-full h-full object-contain" />
+                <img
+                  src={currentPreview}
+                  alt={`${label} preview`}
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="text-left">
-                <p className="text-sm font-medium text-gray-700">Archivo cargado</p>
+                <p className="text-sm font-medium text-gray-700">
+                  Archivo cargado
+                </p>
                 <p className="text-xs text-gray-500">Clic para cambiar</p>
               </div>
             </div>
           ) : (
             <div className="flex flex-col items-center">
-              <svg className="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              <svg
+                className="w-10 h-10 mb-3 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                />
               </svg>
               <p className="text-sm font-medium text-gray-700">Subir archivo</p>
               <p className="text-xs text-gray-500 mt-1">PNG, JPG o JPEG</p>
@@ -687,13 +753,15 @@ const FormField: React.FC<{
           className="sr-only"
         />
       </div>
-    )
+    );
   }
 
   if (type === "textarea") {
     return (
       <div className="space-y-2 sm:col-span-2">
-        <Label htmlFor={id} className="text-sm font-medium">{label}</Label>
+        <Label htmlFor={id} className="text-sm font-medium">
+          {label}
+        </Label>
         <Textarea
           id={id}
           name={name}
@@ -704,14 +772,16 @@ const FormField: React.FC<{
           className="resize-none"
         />
       </div>
-    )
+    );
   }
 
   if (type === "select") {
     // Los select ocupan 1 columna por defecto
     return (
       <div className="space-y-2 col-span-1">
-        <Label htmlFor={id} className="text-sm font-medium">{label}</Label>
+        <Label htmlFor={id} className="text-sm font-medium">
+          {label}
+        </Label>
         <Select
           value={value as string}
           onValueChange={(val) => onSelectChange(name, val)}
@@ -728,12 +798,13 @@ const FormField: React.FC<{
           </SelectContent>
         </Select>
       </div>
-    )
+    );
   }
 
   // Determinar si es un campo compacto que debe ocupar 1 columna
-  const isCompactField = type === "number" || 
-    name.includes("%") || 
+  const isCompactField =
+    type === "number" ||
+    name.includes("%") ||
     name.includes("M2") ||
     name.includes("LITROS") ||
     name === "CODIGO POSTAL" ||
@@ -743,11 +814,15 @@ const FormField: React.FC<{
     name.includes("TANQUE") ||
     name.includes("TURNOS") ||
     name.includes("OPERATIVOS") ||
-    name.includes("ADMINISTRATIVOS")
+    name.includes("ADMINISTRATIVOS");
 
   return (
-    <div className={`space-y-2 ${isCompactField ? "" : "sm:col-span-2"}`}>
-      <Label htmlFor={id} className="text-sm font-medium">{label}</Label>
+    <div
+      className={`space-y-2 ${disableColSpan ? "" : isCompactField ? "" : "sm:col-span-2"}`}
+    >
+      <Label htmlFor={id} className="text-sm font-medium">
+        {label}
+      </Label>
       <Input
         id={id}
         name={name}
@@ -762,197 +837,200 @@ const FormField: React.FC<{
         className="h-10"
       />
     </div>
-  )
-}
+  );
+};
 
 export default function FormSTPS() {
-  const [step, setStep] = useState(1)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [logoPreview, setLogoPreview] = useState<string | null>(null)
-  const [imagenPreview, setImagenPreview] = useState<string | null>(null)
-  const [imagen2Preview, setImagen2Preview] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [_error, setError] = useState<string | null>(null)
-  const [formData, setFormData] = useState<FormData>(getInitialFormData())
+  const [step, setStep] = useState(1);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const [imagenPreview, setImagenPreview] = useState<string | null>(null);
+  const [imagen2Preview, setImagen2Preview] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [_error, setError] = useState<string | null>(null);
+  const [formData, setFormData] = useState<FormData>(getInitialFormData());
 
   const resetForm = () => {
-    setIsSubmitted(false)
-    setStep(1)
-    setError(null)
-    setFormData(getInitialFormData())
-    setLogoPreview(null)
-    setImagenPreview(null)
-    setImagen2Preview(null)
-  }
+    setIsSubmitted(false);
+    setStep(1);
+    setError(null);
+    setFormData(getInitialFormData());
+    setLogoPreview(null);
+    setImagenPreview(null);
+    setImagen2Preview(null);
+  };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+
     // Validación especial para cantidad de trabajadores
     if (name === "CANTIDAD TOTAL DE TRABAJADORES") {
       // Solo permitir números, filtrar letras y signos
-      const numericValue = value.replace(/[^0-9]/g, '')
-      
+      const numericValue = value.replace(/[^0-9]/g, "");
+
       // Si el valor es vacío, permitirlo (para poder borrar)
-      if (numericValue === '') {
-        setFormData((prev) => ({ ...prev, [name]: '' }))
-        return
+      if (numericValue === "") {
+        setFormData((prev) => ({ ...prev, [name]: "" }));
+        return;
       }
-      
+
       // Convertir a número
-      let finalValue = parseInt(numericValue, 10)
-      
+      let finalValue = parseInt(numericValue, 10);
+
       // Si es 0, convertirlo a 1
       if (finalValue === 0) {
-        finalValue = 1
+        finalValue = 1;
       }
-      
+
       // Respetar el máximo de 120
       if (finalValue > 120) {
-        finalValue = 120
+        finalValue = 120;
       }
-      
-      setFormData((prev) => ({ ...prev, [name]: finalValue.toString() }))
-      return
+
+      setFormData((prev) => ({ ...prev, [name]: finalValue.toString() }));
+      return;
     }
-    
+
     // Validación para campos de dispensarios (DISP4-DISP15)
     if (name.startsWith("DISP") && /^DISP\d+$/.test(name)) {
-      const fieldNumber = parseInt(name.replace("DISP", ""), 10)
-      
+      const fieldNumber = parseInt(name.replace("DISP", ""), 10);
+
       // Para DISP4-DISP9: solo permitir el número correspondiente
       if (fieldNumber >= 4 && fieldNumber <= 9) {
-        const expectedNumber = fieldNumber.toString()
-        if (value === expectedNumber || value === '') {
-          setFormData((prev) => ({ ...prev, [name]: value }))
+        const expectedNumber = fieldNumber.toString();
+        if (value === expectedNumber || value === "") {
+          setFormData((prev) => ({ ...prev, [name]: value }));
         }
-        return
+        return;
       }
-      
+
       // Para DISP10-DISP15: permitir cualquier número (hasta 2 dígitos)
       if (fieldNumber >= 10 && fieldNumber <= 15) {
-        const numericValue = value.replace(/[^0-9]/g, '')
-        setFormData((prev) => ({ ...prev, [name]: numericValue }))
-        return
+        const numericValue = value.replace(/[^0-9]/g, "");
+        setFormData((prev) => ({ ...prev, [name]: numericValue }));
+        return;
       }
     }
-    
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
 
-  const handleInputChangeDate = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleInputChangeDate = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
     if (name === "FECHA DE INICIO DE OPERACIONES") {
-      const [aaaa, mm, dd] = value.split("-")
-      setFormData((prev) => ({ ...prev, [name]: value, dd, mm, aaaa }))
+      const [aaaa, mm, dd] = value.split("-");
+      setFormData((prev) => ({ ...prev, [name]: value, dd, mm, aaaa }));
     } else {
-      setFormData((prev) => ({ ...prev, [name]: value }))
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
-  }
+  };
 
   const handleSelectChange = (name: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (file) {
-      setFormData((prev) => ({ ...prev, LOGO: file }))
-      setLogoPreview(URL.createObjectURL(file))
+      setFormData((prev) => ({ ...prev, LOGO: file }));
+      setLogoPreview(URL.createObjectURL(file));
     }
-  }
+  };
 
   const handleImagenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (file) {
-      setFormData((prev) => ({ ...prev, IMAGEN: file }))
-      setImagenPreview(URL.createObjectURL(file))
+      setFormData((prev) => ({ ...prev, IMAGEN: file }));
+      setImagenPreview(URL.createObjectURL(file));
     }
-  }
+  };
 
   const handleImagen2Change = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (file) {
-      setFormData((prev) => ({ ...prev, IMAGEN2: file }))
-      setImagen2Preview(URL.createObjectURL(file))
+      setFormData((prev) => ({ ...prev, IMAGEN2: file }));
+      setImagen2Preview(URL.createObjectURL(file));
     }
-  }
+  };
 
   const handleNext = () => {
-    if (step < TOTAL_STEPS) setStep(step + 1)
-  }
+    if (step < TOTAL_STEPS) setStep(step + 1);
+  };
 
   const handlePrevious = () => {
-    if (step > 1) setStep(step - 1)
-  }
+    if (step > 1) setStep(step - 1);
+  };
 
   const fileToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = () => resolve(reader.result as string)
-      reader.onerror = (error) => reject(error)
-    })
-  }
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
 
     try {
-      const submitData: Record<string, any> = {}
-      const images: Array<{ key: string; image: string; mimeType: string }> = []
-      
-    for (const [key, value] of Object.entries(formData)) {
-  if (key === "LOGO" && value instanceof File) {
-    const base64Full = await fileToBase64(value)
-    const base64Match = base64Full.match(/^data:(.+);base64,(.+)$/)
-    if (base64Match) {
-      const mimeType = base64Match[1]
-      const base64Only = base64Match[2]
-      images.push({
-        key: "[LOGO]",
-        image: base64Only,
-        mimeType: mimeType
-      })
-    }
-  } 
-  // ✅ AGREGAR ESTE BLOQUE PARA LA SEGUNDA IMAGEN
-  else if (key === "IMAGEN" && value instanceof File) {
-    const base64Full = await fileToBase64(value)
-    const base64Match = base64Full.match(/^data:(.+);base64,(.+)$/)
-    if (base64Match) {
-      const mimeType = base64Match[1]
-      const base64Only = base64Match[2]
-      images.push({
-        key: "[IMAGEN]",
-        image: base64Only,
-        mimeType: mimeType
-      })
-    }
-  }
-  else if (key === "IMAGEN2" && value instanceof File) {
-    const base64Full = await fileToBase64(value)
-    const base64Match = base64Full.match(/^data:(.+);base64,(.+)$/)
-    if (base64Match) {
-      const mimeType = base64Match[1]
-      const base64Only = base64Match[2]
-      images.push({
-        key: "[IMAGEN2]",
-        image: base64Only,
-        mimeType: mimeType
-      })
-    }
-  }
-  else if (value !== null) {
-    submitData[key] = String(value)
-  }
-}
-      submitData.images = images
+      const submitData: Record<string, any> = {};
+      const images: Array<{ key: string; image: string; mimeType: string }> =
+        [];
+
+      for (const [key, value] of Object.entries(formData)) {
+        if (key === "LOGO" && value instanceof File) {
+          const base64Full = await fileToBase64(value);
+          const base64Match = base64Full.match(/^data:(.+);base64,(.+)$/);
+          if (base64Match) {
+            const mimeType = base64Match[1];
+            const base64Only = base64Match[2];
+            images.push({
+              key: "[LOGO]",
+              image: base64Only,
+              mimeType: mimeType,
+            });
+          }
+        }
+        // ✅ AGREGAR ESTE BLOQUE PARA LA SEGUNDA IMAGEN
+        else if (key === "IMAGEN" && value instanceof File) {
+          const base64Full = await fileToBase64(value);
+          const base64Match = base64Full.match(/^data:(.+);base64,(.+)$/);
+          if (base64Match) {
+            const mimeType = base64Match[1];
+            const base64Only = base64Match[2];
+            images.push({
+              key: "[IMAGEN]",
+              image: base64Only,
+              mimeType: mimeType,
+            });
+          }
+        } else if (key === "IMAGEN2" && value instanceof File) {
+          const base64Full = await fileToBase64(value);
+          const base64Match = base64Full.match(/^data:(.+);base64,(.+)$/);
+          if (base64Match) {
+            const mimeType = base64Match[1];
+            const base64Only = base64Match[2];
+            images.push({
+              key: "[IMAGEN2]",
+              image: base64Only,
+              mimeType: mimeType,
+            });
+          }
+        } else if (value !== null) {
+          submitData[key] = String(value);
+        }
+      }
+      submitData.images = images;
 
       // En producción usa la URL directa de N8N, en desarrollo usa el proxy
-      const apiUrl = import.meta.env.VITE_N8N_WEBHOOK_URL || "/api/imagenes"
-    
+      const apiUrl = import.meta.env.VITE_N8N_WEBHOOK_URL || "/api/imagenes";
+
       // Aqui se hace la peticion
       await fetch(apiUrl, {
         method: "POST",
@@ -962,29 +1040,40 @@ export default function FormSTPS() {
         body: JSON.stringify(submitData),
       }).catch(() => {});
 
-      console.log(submitData)
+      console.log(submitData);
 
-      setIsLoading(false)
-      setIsSubmitted(true)
+      setIsLoading(false);
+      setIsSubmitted(true);
     } catch (error) {
-      console.error("Error al procesar el formulario:", error)
-      setError("Error al procesar la imagen")
-      setIsLoading(false)
+      console.error("Error al procesar el formulario:", error);
+      setError("Error al procesar la imagen");
+      setIsLoading(false);
     }
-  }
+  };
 
-  const currentFields = FORM_SECTIONS[step] || []
+  const currentFields = FORM_SECTIONS[step] || [];
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white p-4">
+      <div
+        className="min-h-screen w-full flex items-center justify-center p-4 overflow-auto"
+        style={{
+          backgroundImage: `url(${fondo})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+        }}
+      >
         <Card className="w-full max-w-3xl">
           <CardContent className="pt-6">
             <div className="text-center space-y-4">
               <div className="flex justify-center">
                 <CheckCircle2 className="h-16 w-16 text-green-500" />
               </div>
-              <h2 className="text-2xl font-bold text-foreground">Formulario Completado</h2>
+              <h2 className="text-2xl font-bold text-foreground">
+                Formulario Completado
+              </h2>
               <p className="text-muted-foreground">
                 Revisa las carpetas con la informacion reemplazada.
               </p>
@@ -998,45 +1087,77 @@ export default function FormSTPS() {
           </CardContent>
         </Card>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white p-4">
-      <Card className="w-full max-w-3xl">
+   <>
+   <div 
+     className="fixed inset-0 z-[-1]"
+     style={{
+       backgroundImage: `url(${fondo})`,
+       backgroundRepeat: "no-repeat",
+       backgroundSize: "cover",
+       backgroundPosition: "center",
+     }}
+   />
+    <div
+      className="min-h-screen w-full flex items-center justify-center p-4 py-8 overflow-auto"
+    >
+      <Card className="w-full max-w-3xl my-8">
         <CardHeader>
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
-              <CardTitle className="text-2xl">Formulario STPS - Clientes {new Date().getFullYear()}</CardTitle>
-              <CardDescription>Complete la información requerida en {TOTAL_STEPS} sección(es)</CardDescription>
+              <CardTitle className="text-2xl">
+                Formulario STPS - Clientes {new Date().getFullYear()}
+              </CardTitle>
+              <CardDescription>
+                Complete la información requerida en 12 secciones
+              </CardDescription>
             </div>
-            <div className="flex-shrink-0">
-              <img src={logo} alt="ESERVICES Logo" className="h-16 w-auto object-contain" />
+            <div className="shrink-0">
+              <img
+                src={logo}
+                alt="ESERVICES Logo"
+                className="h-16 w-auto object-contain"
+              />
             </div>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="overflow-y-auto ">
           <div className="mb-8">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="text-sm font-semibold text-foreground">Paso {step} de {TOTAL_STEPS}</span>
-                  <p className="text-xs text-muted-foreground mt-0.5">Completa todos los campos requeridos</p>
+                  <span className="text-sm font-semibold text-foreground">
+                    Paso {step} de {TOTAL_STEPS}
+                  </span>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    Completa todos los campos requeridos
+                  </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 shadow-lg">
-                    <span className="text-lg font-bold text-white">{Math.round((step / TOTAL_STEPS) * 100)}%</span>
+                  <div
+                    className="flex items-center justify-center w-12 h-12 rounded-full shadow-lg"
+                    style={{ background: "#047857" }}
+                  >
+                    <span className="text-lg font-bold text-white">
+                      {Math.round((step / TOTAL_STEPS) * 100)}%
+                    </span>
                   </div>
                 </div>
               </div>
-              <div className="relative h-3 bg-gradient-to-r from-gray-100 to-gray-200 rounded-full overflow-hidden shadow-inner">
-                <div 
-                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-green-400 via-green-500 to-emerald-500 rounded-full transition-all duration-700 ease-out shadow-md"
-                  style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
+              <div className="relative h-3 bg-linear-to-r from-gray-100 to-gray-200 rounded-full overflow-hidden shadow-inner">
+                <div
+                  className="rounded-full transition-all duration-700 ease-out shadow-md absolute inset-y-0 left-0"
+                  style={{
+                    width: `${(step / TOTAL_STEPS) * 100}%`,
+                    background: "#047857",
+                  }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 animate-pulse" />
+                  <div className="absolute inset-0 bg-linear-to-r from-transparent via-white to-transparent opacity-30 animate-pulse" />
                 </div>
-                <div 
+                <div
                   className="absolute inset-y-0 left-0 flex items-center justify-end pr-2"
                   style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
                 >
@@ -1051,21 +1172,177 @@ export default function FormSTPS() {
           <form onSubmit={handleSubmit}>
             {step < TOTAL_STEPS ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                {currentFields.map((field) => (
-                  <FormField
-                    key={field.id}
-                    field={field}
-                    value={formData[field.name as keyof FormData]}
-                    onChange={field.type === "date" ? handleInputChangeDate : handleInputChange}
-                    onSelectChange={handleSelectChange}
-                    onLogoChange={handleLogoChange}
-                    onImagenChange={handleImagenChange}
-                    onImagen2Change={handleImagen2Change}
-                    logoPreview={logoPreview}
-                    imagenPreview={imagenPreview}
-                    imagen2Preview={imagen2Preview}
-                  />
-                ))}
+                {(() => {
+                  const fields = currentFields;
+                  const result: React.ReactElement[] = [];
+                  let i = 0;
+
+                  while (i < fields.length) {
+                    const field = fields[i];
+
+                    // Detectar si el campo tiene rowGroup y agrupar en pares de 2
+                    if ((field as any).rowGroup) {
+                      const nextField = fields[i + 1];
+
+                      // Verificar si el siguiente campo tiene el mismo rowGroup
+                      if (
+                        nextField &&
+                        (nextField as any).rowGroup === (field as any).rowGroup
+                      ) {
+                        // Renderizar los 2 campos en una fila de 2 columnas
+                        result.push(
+                          <div
+                            key={`row-group-${(field as any).rowGroup}`}
+                            className="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4"
+                          >
+                            <FormField
+                              field={field}
+                              value={formData[field.name as keyof FormData]}
+                              onChange={
+                                field.type === "date"
+                                  ? handleInputChangeDate
+                                  : handleInputChange
+                              }
+                              onSelectChange={handleSelectChange}
+                              onLogoChange={handleLogoChange}
+                              onImagenChange={handleImagenChange}
+                              onImagen2Change={handleImagen2Change}
+                              logoPreview={logoPreview}
+                              imagenPreview={imagenPreview}
+                              imagen2Preview={imagen2Preview}
+                              disableColSpan={true}
+                            />
+                            <FormField
+                              field={nextField}
+                              value={formData[nextField.name as keyof FormData]}
+                              onChange={
+                                nextField.type === "date"
+                                  ? handleInputChangeDate
+                                  : handleInputChange
+                              }
+                              onSelectChange={handleSelectChange}
+                              onLogoChange={handleLogoChange}
+                              onImagenChange={handleImagenChange}
+                              onImagen2Change={handleImagen2Change}
+                              logoPreview={logoPreview}
+                              imagenPreview={imagenPreview}
+                              imagen2Preview={imagen2Preview}
+                              disableColSpan={true}
+                            />
+                          </div>,
+                        );
+                        i += 2; // Saltar los 2 campos del grupo
+                        continue;
+                      }
+                    }
+
+                    // Detectar si es una manguera Regular y si le siguen Premium y Diesel del mismo número
+                    if (
+                      field.name.includes("MANGUERA") &&
+                      field.name.endsWith("R")
+                    ) {
+                      const dispNum = field.name.match(/\d+/)?.[0];
+                      const nextField = fields[i + 1];
+                      const nextNextField = fields[i + 2];
+
+                      // Verificar que los siguientes sean Premium y Diesel del mismo dispensario
+                      if (
+                        nextField &&
+                        nextField.name === `MANGUERA ${dispNum}P` &&
+                        nextNextField &&
+                        nextNextField.name === `MANGUERA ${dispNum}D`
+                      ) {
+                        // Renderizar las 3 mangueras en una fila de 3 columnas
+                        result.push(
+                          <div
+                            key={`manguera-group-${dispNum}`}
+                            className="sm:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-3"
+                          >
+                            <FormField
+                              field={field}
+                              value={formData[field.name as keyof FormData]}
+                              onChange={
+                                field.type === "date"
+                                  ? handleInputChangeDate
+                                  : handleInputChange
+                              }
+                              onSelectChange={handleSelectChange}
+                              onLogoChange={handleLogoChange}
+                              onImagenChange={handleImagenChange}
+                              onImagen2Change={handleImagen2Change}
+                              logoPreview={logoPreview}
+                              imagenPreview={imagenPreview}
+                              imagen2Preview={imagen2Preview}
+                              disableColSpan={true}
+                            />
+                            <FormField
+                              field={nextField}
+                              value={formData[nextField.name as keyof FormData]}
+                              onChange={
+                                nextField.type === "date"
+                                  ? handleInputChangeDate
+                                  : handleInputChange
+                              }
+                              onSelectChange={handleSelectChange}
+                              onLogoChange={handleLogoChange}
+                              onImagenChange={handleImagenChange}
+                              onImagen2Change={handleImagen2Change}
+                              logoPreview={logoPreview}
+                              imagenPreview={imagenPreview}
+                              imagen2Preview={imagen2Preview}
+                              disableColSpan={true}
+                            />
+                            <FormField
+                              field={nextNextField}
+                              value={
+                                formData[nextNextField.name as keyof FormData]
+                              }
+                              onChange={
+                                nextNextField.type === "date"
+                                  ? handleInputChangeDate
+                                  : handleInputChange
+                              }
+                              onSelectChange={handleSelectChange}
+                              onLogoChange={handleLogoChange}
+                              onImagenChange={handleImagenChange}
+                              onImagen2Change={handleImagen2Change}
+                              logoPreview={logoPreview}
+                              imagenPreview={imagenPreview}
+                              imagen2Preview={imagen2Preview}
+                              disableColSpan={true}
+                            />
+                          </div>,
+                        );
+                        i += 3; // Saltar las 3 mangueras
+                        continue;
+                      }
+                    }
+
+                    // Renderizado normal para otros campos
+                    result.push(
+                      <FormField
+                        key={field.id}
+                        field={field}
+                        value={formData[field.name as keyof FormData]}
+                        onChange={
+                          field.type === "date"
+                            ? handleInputChangeDate
+                            : handleInputChange
+                        }
+                        onSelectChange={handleSelectChange}
+                        onLogoChange={handleLogoChange}
+                        onImagenChange={handleImagenChange}
+                        onImagen2Change={handleImagen2Change}
+                        logoPreview={logoPreview}
+                        imagenPreview={imagenPreview}
+                        imagen2Preview={imagen2Preview}
+                      />,
+                    );
+                    i++;
+                  }
+
+                  return result;
+                })()}
               </div>
             ) : (
               <div>
@@ -1075,58 +1352,77 @@ export default function FormSTPS() {
                       <Check className="w-10 h-10 text-green-600" />
                     </div>
                   </div>
-                  <h3 className="text-2xl font-bold text-foreground">¡Formulario Completado!</h3>
+                  <h3 className="text-2xl font-bold text-foreground">
+                    ¡Formulario Completado!
+                  </h3>
                   <p className="text-muted-foreground">
                     Espere un momento en lo que se llenan los datos.
                   </p>
                 </div>
               </div>
             )}
-
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6">
-              <Button type="button" variant="outline" onClick={handlePrevious} disabled={step === 1 || isLoading} className="w-full sm:w-auto">
-                Anterior
-              </Button>
-              <div className="flex items-center gap-2 flex-wrap justify-center">
-                {Array.from({ length: TOTAL_STEPS - 1 }, (_, i) => i + 1).map((s) => (
-                  <button
-                    key={s}
-                    type="button"
-                    onClick={() => setStep(s)}
-                    disabled={isLoading}
-                    className={`w-8 h-8 rounded-md flex items-center justify-center text-sm font-medium transition-all ${
-                      s === step
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-muted text-muted-foreground hover:bg-muted/80"
-                    } ${isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-              {step < TOTAL_STEPS ? (
-                <Button type="button" onClick={handleNext} disabled={isLoading} className="w-full sm:w-auto">
-                  Siguiente
-                </Button>
-              ) : (
-                <Button type="submit" disabled={isLoading} className="w-full sm:w-auto">
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Enviando...
-                    </>
-                  ) : (
-                    <>
-                      <Check className="mr-2 h-4 w-4" />
-                      Confirmar y Enviar
-                    </>
-                  )}
-                </Button>
-              )}
-            </div>
           </form>
         </CardContent>
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 p-2">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handlePrevious}
+            disabled={step === 1 || isLoading}
+            className="w-full sm:w-auto"
+          >
+            Anterior
+          </Button>
+          <div className="flex items-center gap-2 flex-wrap justify-center">
+            {Array.from({ length: TOTAL_STEPS - 1 }, (_, i) => i + 1).map(
+              (s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => setStep(s)}
+                  disabled={isLoading}
+                  className={`w-8 h-8 rounded-md flex items-center justify-center text-sm font-medium transition-all ${
+                    s === step
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted text-muted-foreground hover:bg-muted/80"
+                  } ${isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+                >
+                  {s}
+                </button>
+              ),
+            )}
+          </div>
+          {step < TOTAL_STEPS ? (
+            <Button
+              type="button"
+              onClick={handleNext}
+              disabled={isLoading}
+              className="w-full sm:w-auto"
+            >
+              Siguiente
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full sm:w-auto"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Enviando...
+                </>
+              ) : (
+                <>
+                  <Check className="mr-2 h-4 w-4" />
+                  Confirmar y Enviar
+                </>
+              )}
+            </Button>
+          )}
+        </div>
       </Card>
     </div>
-  )
+   </>
+  );
 }
